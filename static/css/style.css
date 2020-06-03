@@ -1,0 +1,147 @@
+/* Custom Stylesheet Made By MaterializeCSS.com*/
+
+
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap');
+/*-----------------------<-Background picture->-----------------------*/
+
+.parallax-container {
+  min-height: 380px;
+  line-height: 0;
+  height: auto;
+  color: #F2F2F2;
+  /*background-color:rgba(153, 13, 13, 0.795);*/
+  padding-top: 70px;
+}
+.parallax-container .section {
+  width: 100%;
+  min-height: 480px;
+}
+
+body {
+  background-color: rgba(153, 13, 13, 0.918)
+}
+
+#parallax-container{
+  padding-top: 1px;
+}
+/*----------------------------<-Header->------------------------------*/
+
+.navbar{
+  background-color: rgba(153, 13, 13, 0.795);
+}
+
+#pulp-logo {
+  width: 65px;
+}
+
+nav ul a,
+nav {
+  color: #E9D603;
+  font-size: 15px;
+  letter-spacing: 1px;
+  font-family: 'Alfa Slab One', sans-serif;
+  text-shadow: black 2px 2px;
+}
+
+.sidenav-trigger {
+  color: #F2F2F2;
+}
+
+
+/*---------------------------<-Section->------------------------------*/
+
+@media only screen and (max-width : 992px) {
+  .parallax-container .section {
+    position: absolute;
+    top: 40%;
+  }
+  #index-banner .section {
+    top: 10%;
+  }
+}
+
+@media only screen and (max-width : 600px) {
+  #index-banner .section {
+    top: 0;
+  }
+}
+
+.nav-wrapper {
+  width: 85% !important;
+}
+
+nav .sidenav-trigger {
+  float: right;
+}
+nav{
+  height: 64px !important;
+}
+
+#text-banner{
+  display: inline-block;
+}
+#text-banner h3{
+  font-weight: 400;
+  font-family: 'Alfa Slab One', sans-serif;
+  color: #F2F2F2;
+}
+
+#recordsPageButton {
+  color: black;
+  
+}
+
+#pulp-logo-banner {
+  float: right;
+  width: 200px;
+}
+
+@media only screen and (max-width : 600px) {
+  .upper-banner, .botton-banner, #pulp-logo-banner, h3{
+    text-align: center;
+    display: inline-block;
+    float: none;
+    font-size: 2rem;
+  }
+}
+/*--------------Icon Section----------------*/
+
+.icon-cection{
+  background-color:rgba(153, 13, 13, 0.082);
+}
+
+.icon-block {
+  padding: 0 15px;
+}
+
+.icon-block .material-icons {
+  font-size: inherit;
+}
+
+.record-images img{
+  max-width: 60%;
+}
+.record-images-name {
+  font-family: 'Alfa Slab One', sans-serif;
+  color: #E9D603;
+  text-shadow: black 2px 2px;
+}
+
+.icon-block p{
+  color: #F2F2F2;
+}
+
+
+.parallax-container-text{
+  font-family: 'Alfa Slab One', sans-serif;
+  font-weight: 200;
+  text-shadow: black 2px 2px;
+}
+/*---------------------------<-Footer->-------------------------------*/
+footer.page-footer {
+  margin: 0;
+}
+
+.teal {
+  background-color:rgba(153, 13, 13, 0) !important;
+}
