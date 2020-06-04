@@ -107,39 +107,112 @@ Database Picture
 To run this project you need the following tools installed:
 
   - <a href="https://www.python.org/downloads/" target="_blank"> Python3 </a>
-  - <a href="https://code.visualstudio.com/" target="_blank"> VS Code </a> or a a code editor that have a debug tool.
+  - <a href="https://code.visualstudio.com/" target="_blank"> VS Code </a> or a code editor that have a debug tool.
   - <a href="https://www.mongodb.com/cloud/atlas" target="_blank"> MongoDB </a>
   - <a href="https://git-scm.com/" target="_blank"> Git </a>
   - <a href="https://en.wikipedia.org/wiki/Heroku" target="_blank"> Heroku </a>
 
-    **Local deployment**
-    The following instructions are based on Windows 10 and VS Code editor.
+**Local deployment**
 
-    Instructions:
-      1.Clone the repository in Github
-        text.......
-      2.Text
-        text.......
-      3.Text
-        text.......
-      4.Text
+The following instructions are based on Windows 10 and VS Code editor.
 
-    **Heroku deployment**
-    This project is hosted using Heroku.
+> Instructions:
 
-    Instructions:
-      1.Install Heroku
-        npm install -g heroku
-      2.Create a procfile
-        echo web: python app.py > Procfile
-      3.Create a new app
-        text.......
-      4.Set the environment variables on your Heroku settings.
-        text.........
-      5.Commit the project
-        text.......
+  I.    Clone the repository in Github
+ ```shell
+  git clone <repository name>.git
+ ```
+    
+  II.   create a virtual environment with the command:
+```shell
+ python -m venv env
+```
 
+  III.   Activate an environment
+```shell
+To select a specific environment, use the Python: Select Interpreter command from the Command Palette  Ctrl+Shift+P
+Opening a terminal with the Terminal: Create New Integrated Terminal command.
+In the latter case, VS Code automatically activated the selected environment.
+Once you switch the interpreter VS code should create a .vscode folder within your workspace with a settings.
+Json indicating the python interpreter. This will give VS code the direction of where to locate the venv.
+
+For more information:
+https://code.visualstudio.com/docs/python/environments
+```
+
+  IV.   Install all the package that's needed
+```shell
+pip install Flask
+pip install pymongo
+pip install dnspython
+pip install Flask-PyMongo
+```
+
+  VI.   Create a database in MongoDB Atlas
+`https://www.mongodb.com/`
+
+  VII.   Create a .env file with your credentials: e.g
+```shell
+MONGO_URI="insert your mongo URI"
+SECRET_KEY="insert your secret key here"
+```
+    
+  VIII.   Run the application
+```shell
+python app.py
+
+Open the website at http://127.0.0.1:5000
+```
+
+**Heroku deployment**
+    
+This project is hosted using Heroku.
+
+> Instructions:
+
+I.    Install Heroku
   
+```shell
+       npm install -g heroku
+       heroku login
+       cd my-project/
+       git init
+       
+       Existing Git repository:
+       heroku git:remote -a <app name>
+```
+
+II.    Generate a requirements file and then install from it in another environment.
+
+ ```shell
+       pip freeze > requirements.txt
+ ```
+    
+III.   Create a Procfile
+
+ ```shell
+       echo web: python app.py > Procfile
+ ```
+ 
+ IV.   Deploy your application to Heroku
+
+ ```shell
+       git add .
+       git commit -am "make it better"
+       git push heroku master
+       
+       Existing Git repository:
+       heroku git:remote -a <app name>
+ ```
+    
+V.    Set the environment variables on your Heroku settings.
+
+ ```shell
+       MONGO_URI="mongodb+srv://<USER NAME>:<SECRET KEY HERE>@mycluster-pcvdt.mongodb.net/<DATABASE NAME>?retryWrites=true&w=majority
+       IP="0.0.0.0"
+       PORT="5000"
+ ```
+    
 ## Credits
   
    **media**
