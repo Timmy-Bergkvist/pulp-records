@@ -12,9 +12,13 @@
   /*background-color:rgba(153, 13, 13, 0.795);*/
   padding-top: 70px;
 }
+
 .parallax-container .section {
   width: 100%;
-  min-height: 480px;
+}
+
+.background-upper {
+  min-height: 513px;
 }
 
 body {
@@ -104,6 +108,7 @@ nav{
     font-size: 2rem;
   }
 }
+
 /*--------------Icon Section----------------*/
 
 .icon-cection{
