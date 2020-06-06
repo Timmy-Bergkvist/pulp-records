@@ -13,12 +13,41 @@
   padding-top: 70px;
 }
 
+.background-upper {
+  min-height: 513px;
+}
+
 .parallax-container .section {
   width: 100%;
 }
 
-.background-upper {
-  min-height: 513px;
+/*
+body, html {
+  height: 100%;
+}*/
+
+#background-upper-image {
+  background-image: url(../images/background-img.jpg);
+  /* Full height */
+  height: 100%;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#background-under-image {
+  background-image: url(../images/background-img2.jpg);
+  /* Full height */
+  height: 100%;
+
+  /* Create the parallax scrolling effect */
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 body {
@@ -142,6 +171,14 @@ nav{
   font-weight: 200;
   text-shadow: black 2px 2px;
 }
+
+/*---------------add records-----------*/
+
+#btn-box {
+  text-align: center;
+}
+
+
 /*---------------------------<-Footer->-------------------------------*/
 footer.page-footer {
   margin: 0;
