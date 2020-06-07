@@ -1,52 +1,41 @@
 {% extends 'base.html' %} {% block content %}
 <div class="container">
-    <h3>Add Record</h3>
+    <h3 class="center">Add Record</h3>
     <div class="row">
-        <form action="{{url_for('insert_genra')}}" method="POST" class="col s12">
+        <form action="{{url_for('insert_reviews')}}" method="POST" class="col s12">
             <div class="row">
                 <div id="recordfix" class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">poll</i>
-                        <select id="genra" name="genra_name">
+                        <select id="genra_name" name="genra_name">
                     <option value="" disabled selected>Choose Genra</option>
-                    {% for genra in genras %}
-                        <option value="{{genra.genra_name}}">{{genra.genra_name}}</option>
+                    {% for gen in genra %}
+                        <option value="{{gen.genra_name}}">{{gen.genra_name}}</option>
                     {% endfor %}
                     </select>
-                        <label>Genra</label>
                     </div>
                 </div>
-                <div class="input-field col s12">
-                    <i class="material-icons prefix">assignment</i>
-                    <input id="genra" name="genra" type="text">
-                    <label for="icon_prefix">Genra</label>
-                </div>
             </div>
             <div class="input-field col s12">
                 <i class="material-icons prefix">assignment</i>
-                <input id="artist_name" name="artist_name" type="text">
-                <label for="icon_prefix">Artist</label>
+                <input id="artist_name" name="artist_name" type="text" placeholder="Artist">
             </div>
             <div class="input-field col s12">
                 <i class="material-icons prefix">assignment</i>
-                <input id="record_title" name="record_title" type="text">
-                <label for="icon_prefix">Record Title</label>
+                <input id="record_title" name="record_title" type="text" placeholder=" Record Title">
             </div>
             <div class="input-field col s12">
                 <i class="material-icons prefix">assignment</i>
-                <input id="record_image" name="record_image" type="text">
-                <label for="icon_prefix">Record Image</label>
+                <input id="record_image" name="record_image" type="text" placeholder="Record Image">
             </div>
             <div class="input-field col s12">
                 <i class="material-icons prefix">assignment</i>
-                <input id="product_link" name="product_link" type="text">
-                <label for="icon_prefix">Link to Discogs</label>
+                <input id="product_link" name="product_link" type="text" placeholder="Link to Discogs">
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">subject</i>
-                    <textarea name="record_description" id="record_description" class="materialize-textarea"></textarea>
-                    <label>Bio</label>
+                    <textarea name="record_description" id="record_description" class="materialize-textarea" placeholder="Bio"></textarea>
                 </div>
             </div>
             <div id="btn-box">

@@ -21,14 +21,30 @@ mongo = PyMongo(app)
 def index():
     return render_template("index.html")
 
-@app.route('/records')
-def records():
-    return render_template("records.html")
+
+@app.route('/get_genra')
+def get_genra():
+    return render_template('records.html', 
+                           reviews=mongo.db.reviews.find())
 
 
 @app.route('/add_records')
 def add_records():
-    return render_template("addrecords.html")
+    return render_template('addrecords.html', 
+                           genra=mongo.db.genra.find())
+
+
+@app.route('/insert_reviews', methods=['POST'])
+def insert_reviews():
+    reviews =  mongo.db.reviews
+    reviews.insert_one(request.form.to_dict())
+    return redirect(url_for('get_genra'))
+
+
+
+@app.route('/records')
+def records():
+    return render_template("records.html")
 
 
 @app.route('/profile')
@@ -41,19 +57,6 @@ def log_out():
     return render_template("logout.html")
 
 
-
-@app.route('/get_reviews')
-def get_reviews():
-    return render_template('records.html', 
-                           reviews=mongo.db.reviews.find())
-
-
-
-@app.route('/insert_genra', methods=['POST'])
-def insert_genra():
-    tasks =  mongo.db.genra
-    tasks.insert_one(request.form.to_dict())
-    return redirect(url_for('get_reviews'))
 
 
 

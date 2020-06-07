@@ -178,6 +178,13 @@ nav{
   text-align: center;
 }
 
+.select-wrapper input.select-dropdown {
+  color: rgb(195, 195, 195) !important;
+}
+.select-dropdown li.disabled, .select-dropdown li.disabled>span, .select-dropdown li.optgroup {
+  color: gray !important;
+}
+
 
 /*---------------------------<-Footer->-------------------------------*/
 footer.page-footer {
