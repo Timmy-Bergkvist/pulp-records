@@ -41,7 +41,6 @@ def insert_reviews():
     return redirect(url_for('get_genra'))
 
 
-
 @app.route('/records')
 def records():
     return render_template("records.html")
