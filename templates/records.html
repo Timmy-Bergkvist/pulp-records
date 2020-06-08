@@ -1,5 +1,32 @@
 {% extends 'base.html' %} {% block content %}
+<section class="container" id="info-container">
+    <h3 class="center">Records</h3>
 
+
+    <div class="col l3 s6">
+        <div class="row left">
+            <select id="genra_name" name="genra_name">
+            <option value="" disabled selected>Records</option>
+            {% for gen in genra %}
+                <option value="{{gen.genra_name}}">{{gen.genra_name}}</option>
+            {% endfor %}
+            </select>
+        </div>
+    </div>
+        
+
+    {% for record in records %}
+
+
+
+
+    {% if (loop.index - loop.length) %} 
+    
+    {% if (loop.first == loop.last) and (loop.first == true) %} 
+    
+    {% else %} <hr> {% endif %} {% endif %}
+    {% endfor %} 
+</section>
 
 
 {% endblock %}

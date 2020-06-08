@@ -52,11 +52,15 @@ def profile():
     return render_template("profile.html")
 
 
+
+@app.route('/log_in')
+def log_in():
+    return render_template("login.html")
+
+
 @app.route('/log_out')
 def log_out():
     return render_template("logout.html")
-
-
 
 
 

@@ -1,0 +1,33 @@
+{% extends 'base.html' %} {% block content %}
+
+<section class="container" id="info-container">
+    <h3 class="center">Search results</h3>
+
+    {% for record in records %}
+
+    <div class="row collection-item">
+        <div class="col l5 m4 s12 center-on-small-only">
+            <div class="row">
+                <div class="col s12"> {{ review.record_image }}</div>
+            </div>
+            <div class="row">
+                <div class="col s12"> {{ review.artist_name }}</div>
+            </div>
+            <div class="row">
+                <div class="col s12"> {{ review.record_title }} </div>
+            </div>
+        </div>
+        <div class="col l3 m4 s12 center-on-small-only"><a class="btn waves-effect grey darken-1" href="{{url_for('view_records', review_id=review._id)}}">View Record</a></div>
+    </div> 
+    
+    {% if (loop.index - loop.length) %} 
+    
+    {% if (loop.first == loop.last) and (loop.first == true) %} 
+    
+    {% else %} <hr> {% endif %} {% endif %}
+    
+{% endfor %}
+
+</section>
+
+{% endblock %}

@@ -83,6 +83,12 @@ nav {
 
 /*---------------------------<-Section->------------------------------*/
 
+#info-container {
+  background-color: rgba(105, 105, 105, 0.9);
+  padding: 20px 50px 50px;
+}
+
+
 @media only screen and (max-width : 992px) {
   .parallax-container .section {
     position: absolute;
@@ -184,6 +190,7 @@ nav{
 .select-dropdown li.disabled, .select-dropdown li.disabled>span, .select-dropdown li.optgroup {
   color: gray !important;
 }
+/*----------------records---------------*/
 
 
 /*---------------------------<-Footer->-------------------------------*/

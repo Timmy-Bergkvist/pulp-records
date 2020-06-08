@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block content %}
-<div class="container">
+<div class="container" id="info-container">
     <h3 class="center">Add Record</h3>
     <div class="row">
         <form action="{{url_for('insert_reviews')}}" method="POST" class="col s12">
@@ -16,33 +16,41 @@
                     </div>
                 </div>
             </div>
-            <div class="input-field col s12">
-                <i class="material-icons prefix">assignment</i>
-                <input id="artist_name" name="artist_name" type="text" placeholder="Artist">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">record_voice_over</i>
+                    <input id="artist_name" name="artist_name" type="text" placeholder="Artist">
+                </div>
             </div>
-            <div class="input-field col s12">
-                <i class="material-icons prefix">assignment</i>
-                <input id="record_title" name="record_title" type="text" placeholder=" Record Title">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">title</i>
+                    <input id="record_title" name="record_title" type="text" placeholder=" Record Title">
+                </div>
             </div>
-            <div class="input-field col s12">
-                <i class="material-icons prefix">assignment</i>
-                <input id="record_image" name="record_image" type="text" placeholder="Record Image">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">image</i>
+                    <input id="record_image" name="record_image" type="text" placeholder="Record Image">
+                </div>
             </div>
-            <div class="input-field col s12">
-                <i class="material-icons prefix">assignment</i>
-                <input id="product_link" name="product_link" type="text" placeholder="Link to Discogs">
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">insert_link</i>
+                    <input id="product_link" name="product_link" type="text" placeholder="Link to Discogs">
+                </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">subject</i>
-                    <textarea name="record_description" id="record_description" class="materialize-textarea" placeholder="Bio"></textarea>
+                    <textarea name="record_description" id="record_description" class="materialize-textarea" data-length="500" placeholder="Bio"></textarea>
                 </div>
             </div>
             <div id="btn-box">
             <button class="btn waves-effect grey darken-1" type="submit" name="action">Add Record
                 <i class="material-icons right">playlist_add</i>
             </button>
-            <button class="btn waves-effect grey darken-1" type="submit" name="action">Cancel
+            <button class="btn waves-effect grey darken-1" href="{{url_for('index')}}">Cancel<i class="material-icons right">cancel</i>
             </button>
             </div>
         </form>
