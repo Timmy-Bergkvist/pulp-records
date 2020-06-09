@@ -1,6 +1,8 @@
 {% extends 'base.html' %} {% block content %}
+<br>
+<br>
 <div class="container" id="info-container">
-    <h3 class="center">Records</h3>
+    <h4 class="center h4header">Records</h4>
     <br>
     <div class="input-field col s12">
         <div class="row left">
@@ -20,9 +22,6 @@
         <div class="row collection-item" href="#">
                 <div class="row col s12">
                     <div class="title">{{ review.artist_name }}</div>
-                    <div class="record-images center">
-                        <img src="../static/images/record-img1.jpg">
-                    </div>
                     <!--<div class="col l4 m4 s12 center-on-small-only"><img class="image-collection" src="{{ review.record_image }}" alt="Picture of {{ review.artist_name }}"></div>-->
                     <div>{{ review.record_title }} </div>
                     <div>{{ review.genra_name }}</div>
@@ -36,9 +35,8 @@
         
         {% else %} <hr> {% endif %} {% endif %}
         {% endfor %} 
+        <br>
+        <br>
     </div>
 </div>
-</section>
-
-
 {% endblock %}

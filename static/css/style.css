@@ -26,6 +26,20 @@ body, html {
   height: 100%;
 }*/
 
+main {
+  background: url('../images/background-img.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+header{
+  background-color: rgba(153, 13, 13, 0.918) !important;
+}
+
+.image-section, .page-footer {
+  background-color: rgba(153, 13, 13, 0.918) !important;
+}
+
+
 #background-upper-image {
   background-image: url(../images/background-img.jpg);
   /* Full height */
@@ -48,10 +62,6 @@ body, html {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-body {
-  background-color: rgba(153, 13, 13, 0.918)
 }
 
 #parallax-container{
@@ -82,12 +92,15 @@ nav {
 
 
 /*---------------------------<-Section->------------------------------*/
-
-#info-container {
-  background-color: rgba(105, 105, 105, 0.9);
-  padding: 20px 50px 50px;
+.h4header {
+  font-family: 'Alfa Slab One', sans-serif;
+  color: #F2F2F2;
 }
 
+#info-container {
+  background-color: rgba(153, 13, 13, 0.795);
+  padding: 20px 50px 50px;
+}
 
 @media only screen and (max-width : 992px) {
   .parallax-container .section {
