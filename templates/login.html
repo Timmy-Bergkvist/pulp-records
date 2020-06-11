@@ -1,8 +1,23 @@
 {% extends "base.html" %} 
-
 {% block content %}
-<h2>Log In</h2>
-
-
-
+<br>
+<br>
+<div class="container" id="info-container">
+<h4 class="center h4header">Login</h4>
+<form action="/login" method="post">
+  <p>Email</p>
+    <div class="row">
+        <div class="col s12 title">{{ form.email }}</div>
+    </div>
+  <p>Password</p>
+    <div class="row">
+        <div class="col s12"> {{ form.password }} {{ form.hidden_tag() }}</div>
+    </div>
+  <br>
+  <br>
+  <input type="submit" value="Login">
+</form>
+</div>
+<br>
+<br>
 {% endblock %}
