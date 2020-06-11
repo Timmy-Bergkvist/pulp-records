@@ -1,7 +1,14 @@
 import os
+import re
+import logging
 from flask import Flask, render_template, redirect, request, url_for
 from flask_pymongo import PyMongo
+from flask_login import LoginManager, current_user, login_user, logout_user, login_required
 from bson.objectid import ObjectId
+from forms import LoginForm, RegistrationForm
+from werkzeug.security import generate_password_hash, check_password_hash
+from user import User
+
 
 
 from os import path
@@ -13,6 +20,9 @@ app = Flask(__name__)
 
 app.config["MONGO_DBNAME"] = 'pulpRecordsDB'
 app.config["MONGO_URI"] = os.getenv('MONGO_URI', 'mongodb://localhost')
+
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
 
 mongo = PyMongo(app)
 
@@ -29,6 +39,7 @@ def get_genra():
 
 
 @app.route('/add_records')
+@login_required
 def add_records():
     return render_template('addrecords.html', 
                            genra=mongo.db.genra.find())
@@ -42,24 +53,71 @@ def insert_reviews():
 
 
 @app.route('/records')
+@login_required
 def records():
     return render_template("records.html")
 
 
 @app.route('/profile')
+@login_required
 def profile():
     return render_template("profile.html")
 
 
+#Registration
 
-@app.route('/log_in')
-def log_in():
-    return render_template("login.html")
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegForm()
+    if request.method == 'POST':
+        if form.validate():
+            existing_user = User.objects(email=form.email.data).first()
+            if existing_user is None:
+                hashpass = generate_password_hash(form.password.data, method='sha256')
+                hey = User(form.email.data,hashpass).save()
+                login_user(hey)
+                return redirect(url_for('dashboard'))
+    return render_template('register.html', form=form)
 
 
-@app.route('/log_out')
-def log_out():
-    return render_template("logout.html")
+#Login
+
+class User(UserMixin, db.register):
+    meta = {'collection': '<---YOUR_COLLECTION_NAME--->'}
+    email = db.register(max_length=30)
+    password = db.register()
+@login_manager.user_loader
+def load_user(user_id):
+    return User.objects(pk=user_id).first()
+
+
+class RegForm(FlaskForm):
+    email = StringField('email',  validators=[InputRequired(), Email(message='Invalid email'), Length(max=30)])
+    password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=20)])
+
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated == True:
+        return redirect(url_for('dashboard'))
+    form = RegForm()
+    if request.method == 'POST':
+        if form.validate():
+            check_user = User.objects(email=form.email.data).first()
+            if check_user:
+                if check_password_hash(check_user['password'], form.password.data):
+                    login_user(check_user)
+                    return redirect(url_for('dashboard'))
+    return render_template('login.html', form=form)
+
+
+
+@app.route('/logout', methods = ['GET'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 
