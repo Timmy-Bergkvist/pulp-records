@@ -1,15 +1,15 @@
 import os
-from flask import Flask, render_template, redirect, request, url_for
+from flask import Flask, render_template, redirect, request, url_for, flash
 from flask_mongoengine import MongoEngine, Document
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField
-from wtforms.validators import InputRequired, Email, Length, DataRequired
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import InputRequired, Email, Length, DataRequired, EqualTo
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from email_validator import validate_email, EmailNotValidError
+from forms import LoginForm, RegistrationForm
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-
 
 
 from os import path
@@ -26,24 +26,32 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 mongo = PyMongo(app)
 
 db = MongoEngine(app)
-login_manager = LoginManager()
-login_manager.init_app(app)
+login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 
 class User(UserMixin, db.Document):
-    meta = {'collection': '<---YOUR_COLLECTION_NAME--->'}
-    email = db.StringField(max_length=30)
-    password = db.StringField()
+    def __init__(self, username):
+        self.username = username
 
-@login_manager.user_loader
-def load_user(user_id):
-    return User.objects(pk=user_id).first()
+    @staticmethod
+    def is_authenticated():
+        return True
 
-class RegForm(FlaskForm):
-    email = StringField('email',  validators=[InputRequired(), Email(message='Invalid email'), Length(max=30)])
-    password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=20)])
+    @staticmethod
+    def is_active():
+        return True
 
+    @staticmethod
+    def is_anonymous():
+        return False
+
+    def get_id(self):
+        return self.username
+
+    @staticmethod
+    def check_password(password_hash, password):
+        return check_password_hash(password_hash, password)
 
 
 @app.route('/')
@@ -82,50 +90,89 @@ def records():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template("profile.html", name=current_user.email)
+    return render_template("profile.html", name=current_user.username)
 
 
 #Registration
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    form = RegForm()
-    if request.method == 'POST':
-        if form.validate():
-            existing_user = User.objects(email=form.email.data).first()
-            if existing_user is None:
-                hashpass = generate_password_hash(form.password.data, method='sha256')
-                hey = User(form.email.data,hashpass).save()
-                login_user(hey)
-                return redirect(url_for('profile'))
+    if current_user.is_authenticated:
+        flash('You are currently logged in!', 'info')
+        return redirect(url_for('index'))
+
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        existing_user = mongo.db.users.find_one(
+            {"username": form.username.data.lower() })
+        existing_email = mongo.db.users.find_one(
+            {"email": form.email.data})
+
+        if existing_user is None and existing_email is None:
+            password = generate_password_hash(request.form['password'], method='sha256')
+            mongo.db.users.insert_one({
+                                'username': request.form['username'].lower(),
+                                'email': request.form['email'],
+                                'password': password
+            })
+
+            flash("Congratulations you are now a registered!")
+            return redirect(url_for('login'))
+
+        elif existing_user is not None:
+            flash('Username is already in use. Please try a different username.', 'warning')  
+        else:
+            flash('Email is already in use.', 'warning')
+            
     return render_template('register.html', form=form)
+
+
+
+#Callback used to reload the user object from the username 
+
+@login_manager.user_loader
+def load_user(username):
+    u = mongo.db.users.find_one({"username": username})
+    if not u:
+        return None
+        
+    return User(u['username'])
+
 
 
 #Login
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated == True:
+    if current_user.is_authenticated:
+        flash('You are currently logged in!', 'info')
         return redirect(url_for('profile'))
-    form = RegForm()
-    if request.method == 'POST':
-        if form.validate():
-            check_user = User.objects(email=form.email.data).first()
-            if check_user:
-                if check_password_hash(check_user['password'], form.password.data):
-                    login_user(check_user)
-                    return redirect(url_for('profile'))
-    return render_template('login.html', form=form)
 
+    form = LoginForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        user = mongo.db.users.find_one({"username": form.username.data.lower()})
+        if user and User.check_password(user['password'], form.password.data):
+            user_obj = User(user['username'])
+            login_user(user_obj)
+
+            flash("You have successfully logged into your account.")
+            return redirect(url_for('profile'))
+
+        elif user is None:
+            flash("Username does not exist.", 'error')
+        else:
+            flash("Wrong password.", 'error')
+
+    return render_template('login.html', form=form)
 
 
 #Logout
 
-@app.route('/logout', methods = ['GET'])
+@app.route('/logout')
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('index'))
 
 
 
