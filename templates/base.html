@@ -18,6 +18,10 @@
   <!--Navbar visible for logged in users -->
   
  <header> 
+  {{ toastr.include_jquery() }}
+  {{ toastr.include_toastr_css() }}
+  {{ toastr.message() }}
+  
   <nav class="navbar" role="navigation">
     {% if current_user.is_authenticated %}
     <div class="nav-wrapper container">
@@ -117,5 +121,6 @@
   
 
   <script src="{{url_for('static', filename='js/script.js')}}"></script>
+  {{ toastr.include_toastr_js() }}
   </body>
 </html>

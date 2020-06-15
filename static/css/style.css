@@ -157,6 +157,18 @@ nav{
   }
 }
 
+/*-----Registration and login Flash-------*/
+
+span, .error {
+  color: #dad3d2;
+  padding-left: 45px;
+  font-weight: 300;
+}
+
+.toast{
+  display: block;
+}
+
 /*--------------Icon Section----------------*/
 
 .icon-cection{

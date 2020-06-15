@@ -1,5 +1,4 @@
 {% extends "base.html" %} 
-
 {% block content %}
 <br>
 <br>
@@ -17,15 +16,23 @@
     </div>
   <p>Password</p>
     <div class="row">
-        <div class="col s12"> {{ form.password }}</div>
+        <div class="col s12 error"> {{ form.password }} {% for error in form.password.errors %}
+          {{ error }}
+         {% endfor %}
+        </div>
     </div>
   <p>Repeat Password</p>
     <div class="row">
-        <div class="col s12"> {{ form.password2 }}</div>
+        <div class="col s12 error"> {{ form.password2 }} {% for error in form.password2.errors %}
+          {{ error }}
+         {% endfor %}
+        </div>
     </div>
   <br>
   <br>
-  <button class="btn waves-effect grey darken-1" type="submit" value="Login" name="action">Sign Up</button>
+  <div id="btn-box">
+  <button class="btn waves-effect center grey darken-1" type="submit" value="Login" name="action">Sign Up</button>
+  </div>
 </form>
 </div>
 <br>

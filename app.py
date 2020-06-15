@@ -8,6 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from email_validator import validate_email, EmailNotValidError
 from forms import LoginForm, RegistrationForm
+from flask_toastr import Toastr
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
@@ -24,6 +25,7 @@ app.config["MONGO_URI"] = os.getenv('MONGO_URI', 'mongodb://localhost')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 mongo = PyMongo(app)
+toastr = Toastr(app)
 
 db = MongoEngine(app)
 login_manager = LoginManager(app)
@@ -116,11 +118,11 @@ def register():
                                 'password': password
             })
 
-            flash("Congratulations you are now a registered!")
+            flash(f'{form.username.data.lower()}, you are now a registered!', 'success')
             return redirect(url_for('login'))
 
         elif existing_user is not None:
-            flash('Username is already in use. Please try a different username.', 'warning')  
+            flash('Username is already in use.', 'warning') 
         else:
             flash('Email is already in use.', 'warning')
             
@@ -145,7 +147,7 @@ def load_user(username):
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        flash('You are currently logged in!', 'info')
+        flash('You are logged in!', 'info')
         return redirect(url_for('profile'))
 
     form = LoginForm()
@@ -155,11 +157,11 @@ def login():
             user_obj = User(user['username'])
             login_user(user_obj)
 
-            flash("You have successfully logged into your account.")
+            flash("You logged in", 'success')
             return redirect(url_for('profile'))
 
         elif user is None:
-            flash("Username does not exist.", 'error')
+            flash("Username does not exist.", 'warning')
         else:
             flash("Wrong password.", 'error')
 

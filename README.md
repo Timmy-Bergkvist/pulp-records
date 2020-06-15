@@ -130,11 +130,9 @@ The following instructions are based on Windows 10 and VS Code editor.
 
   III.   Activate an environment
 ```shell
-To select a specific environment, use the Python: Select Interpreter command from the Command Palette  Ctrl+Shift+P
-Opening a terminal with the Terminal: Create New Integrated Terminal command.
-In the latter case, VS Code automatically activated the selected environment.
-Once you switch the interpreter VS code should create a .vscode folder within your workspace with a settings.
-Json indicating the python interpreter. This will give VS code the direction of where to locate the venv.
+
+virtualenv env
+source env/bin/activate
 
 For more information:
 https://code.visualstudio.com/docs/python/environments
