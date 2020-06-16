@@ -2,33 +2,26 @@
 <br>
 <br>
 <div class="container" id="info-container">
+    {% for review in reviews %}
     <div class="container">
-        {% for review in reviews %}
         <div class="row collection-item">
-            <div class="col l4 m4 s12 center-on-small-only"><img class="image-collection" src="{{ review.record_image }}" alt="Picture of {{ review.artist_name }}"></div>
-                <div class="row">
-                    <div class="col s12 title">{{ review.artist_name }}</div>
-                </div>
-                <div class="row">
-                    <div class="col s12"> {{ review.record_title }} </div>
-                </div>
-                <div class="row">
-                    <div class="col s12">{{ review.genra_name }}</div>
-                </div>
-                <div class="row">
-                    <div class="col s12">{{ review.record_description}}</div>
-                </div>
+            <div class="row">
+                <div class="col s12 title">{{ review.artist_name }}</div>
             </div>
-
+            <div class="row">
+                <div class="col s12"> {{ review.record_image }} </div>
+                <div class="col s12"> {{ review.record_title }} </div>
+            </div>
+            <div class="row">
+                <div class="col s12">{{ review.genra_name }}</div>
+            </div>
+            <div class="row">
+                <div class="col s12">{{ review.record_description}}</div>
+            </div>
+        </div>
             <div class="col l3 m4 s12 center-on-small-only"><a class="btn waves-effect waves-light" href="#"><i class="material-icons right">local_library</i>Buy Record</a></div>
         </div>
-
-        {% if (loop.index - loop.length) %} 
-        
-        {% if (loop.first == loop.last) and (loop.first == true) %} 
-        
-        {% else %} <hr> {% endif %} {% endif %}
-        {% endfor %} 
+    {% endfor %} 
 </div>
 <br>
 <br>

@@ -77,10 +77,19 @@ def add_records():
 
 
 @app.route('/insert_reviews', methods=['POST'])
+@login_required
 def insert_reviews():
     reviews =  mongo.db.reviews
     reviews.insert_one(request.form.to_dict())
     return redirect(url_for('get_genra'))
+
+
+
+@app.route('/show_records')
+@login_required
+def show_records():
+    total = mongo.db.reviews.count_documents({})
+    return render_template('records.html')
 
 
 @app.route('/records')
@@ -94,6 +103,7 @@ def records():
 def profile():
     return render_template("profile.html", name=current_user.username)
     
+
 #Delete user
 
 @app.route('/delete_profile/<user_id>')
@@ -187,6 +197,10 @@ def logout():
     return redirect(url_for('index'))
 
 
+@app.route('/view_record')
+@login_required
+def view_record():
+    return render_template('viewrecords.html')
 
 
 if __name__ == '__main__':
