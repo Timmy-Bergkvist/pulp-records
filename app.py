@@ -93,6 +93,16 @@ def records():
 @login_required
 def profile():
     return render_template("profile.html", name=current_user.username)
+    
+#Delete user
+
+@app.route('/delete_profile/<user_id>')
+@login_required
+def delete_user(user_id):
+    #username = current_user.username
+    #mongo.db.users.remove({'_id': ObjectId(user_id)})
+    #session.clear()
+    return render_template(url_for('index'))
 
 
 #Registration
