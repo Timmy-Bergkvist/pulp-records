@@ -1,4 +1,5 @@
 import os
+import cloudinary as Cloud
 from flask import Flask, render_template, redirect, request, url_for, flash
 from flask_mongoengine import MongoEngine, Document
 from flask_wtf import FlaskForm
@@ -23,6 +24,12 @@ app = Flask(__name__)
 app.config["MONGO_DBNAME"] = 'pulpRecordsDB'
 app.config["MONGO_URI"] = os.getenv('MONGO_URI', 'mongodb://localhost')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+
+Cloud.config.update = ({
+    'cloud_name':os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'api_key': os.getenv('CLOUDINARY_API_KEY'),
+    'api_secret': os.getenv('CLOUDINARY_API_SECRET')
+})
 
 mongo = PyMongo(app)
 toastr = Toastr(app)
@@ -88,7 +95,6 @@ def insert_reviews():
 @app.route('/show_records')
 @login_required
 def show_records():
-    total = mongo.db.reviews.count_documents({})
     return render_template('records.html')
 
 
@@ -101,19 +107,14 @@ def records():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template("profile.html", name=current_user.username)
+    '''
+    user = mongo.db.users.find_one({'username': username})
+    Find all reviews added by the user
+    user_review = mongo.db.reviews.find(
+        {'added_by': username}).sort([("_id", -1)])
+    '''
+    return render_template("profile.html")#, user=user, reviews=user_review)
     
-
-#Delete user
-
-@app.route('/delete_profile/<user_id>')
-@login_required
-def delete_user(user_id):
-    #username = current_user.username
-    #mongo.db.users.remove({'_id': ObjectId(user_id)})
-    #session.clear()
-    return render_template(url_for('index'))
-
 
 #Registration
 
@@ -161,6 +162,18 @@ def load_user(username):
     return User(u['username'])
 
 
+#Delete user
+
+@app.route('/delete_profile/<user_id>')
+@login_required
+def delete_profile(user_id):
+    username = current_user.username
+    mongo.db.reviews.remove({'added_by': username })
+    mongo.db.users.remove({'_id': ObjectId(user_id)})
+
+    return render_template(url_for('index'))
+
+
 
 #Login
 
@@ -178,7 +191,7 @@ def login():
             login_user(user_obj)
 
             flash("You logged in", 'success')
-            return redirect(url_for('profile'))
+            return redirect(url_for('profile', username=current_user))
 
         elif user is None:
             flash("Username does not exist.", 'warning')
@@ -200,7 +213,7 @@ def logout():
 @app.route('/view_record')
 @login_required
 def view_record():
-    return render_template('viewrecords.html')
+    return render_template('viewrecord.html')
 
 
 if __name__ == '__main__':
