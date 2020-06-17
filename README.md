@@ -2,17 +2,44 @@
 # pulp-records
 A record review and recommendation site
 
+
+**Target Audience**
+
+  Pulp Records is a website for people who like music and want to share their favorite records and review them.
+  The website provides user with information about various music records and reviews.
+  On the platform there will be an option to create an account to review and add music records.
+
 ## UX
 
-text
+**Project sections:**
 
-- User type.
-  - text
+  - Homepage: Containing a welcome message to sign up to the account with a logo and some info at the bottom.
+  
+  - Sign up form: Containing a form that enables user to sign up for the app.
 
-  - text
+  - Login form: Containing a form that enables user to login for the app.
+  
+  - Add Record: Containing a form that enables user to add a record with information.
+  
+  - Profile: Containing user information and the options to delete and edit the acount.
+  
+  - Records: A page displaying all the records.
+  
+  - View Record: A page that contains all the information, reviews and a link to buy the record.
 
-  - text
+**User Stories**
 
+As a user of this platform, I will be able to:
+
+  - Access the platform from a desktop, tablet and a smartphone.
+  
+  - Have an option to login and logout of the account.
+  
+  - Have an option to delete and edit my profile account.
+  
+  - To leave a review.
+  
+  - To be able to delete and edit content added by my.
 
 **Mockups**
   
