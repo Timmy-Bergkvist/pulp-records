@@ -3,12 +3,13 @@ import cloudinary as Cloud
 from flask import Flask, render_template, redirect, request, url_for, flash
 from flask_mongoengine import MongoEngine, Document
 from flask_wtf import FlaskForm
+from routes.forms import LoginForm, RegistrationForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Email, Length, DataRequired, EqualTo
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from email_validator import validate_email, EmailNotValidError
-from forms import LoginForm, RegistrationForm
+from routes.user import User
 from flask_toastr import Toastr
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
@@ -38,29 +39,6 @@ db = MongoEngine(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
-
-class User(UserMixin, db.Document):
-    def __init__(self, username):
-        self.username = username
-
-    @staticmethod
-    def is_authenticated():
-        return True
-
-    @staticmethod
-    def is_active():
-        return True
-
-    @staticmethod
-    def is_anonymous():
-        return False
-
-    def get_id(self):
-        return self.username
-
-    @staticmethod
-    def check_password(password_hash, password):
-        return check_password_hash(password_hash, password)
 
 
 @app.route('/')
