@@ -97,6 +97,26 @@ nav {
   color: #F2F2F2;
 }
 
+.div-label {
+  font-family: 'Alfa Slab One', sans-serif;
+  color: #F2F2F2;
+}
+
+input {
+  color: #F2F2F2 !important;
+}
+
+.record-description {
+  font-family: 'sans-serif';
+  color: #F2F2F2;
+}
+
+.title {
+  font-family: 'Alfa Slab One', sans-serif;
+  color: #F2F2F2;
+  font-size: x-large;
+}
+
 #info-container {
   background-color: rgba(153, 13, 13, 0.795);
   padding: 20px 50px 50px;
@@ -210,10 +230,14 @@ span, .error {
 }
 
 .select-wrapper input.select-dropdown {
-  color: rgb(195, 195, 195) !important;
+  color: #F2F2F2 !important
 }
 .select-dropdown li.disabled, .select-dropdown li.disabled>span, .select-dropdown li.optgroup {
-  color: gray !important;
+  color: black !important;
+  background-color: #dad3d2;
+}
+.dropdown-content li>a, .dropdown-content li>span {
+  color: black !important;
 }
 /*----------------records---------------*/
 
