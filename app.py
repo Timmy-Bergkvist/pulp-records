@@ -1,6 +1,6 @@
 import os
 import cloudinary as Cloud
-from flask import Flask, render_template, redirect, request, url_for, flash
+from flask import Flask, render_template, redirect, request, url_for, flash, session
 from flask_mongoengine import MongoEngine, Document
 from flask_wtf import FlaskForm
 from routes.forms import LoginForm, RegistrationForm
@@ -47,33 +47,69 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/get_genra')
+@app.route('/get_genre')
 @login_required
-def get_genra():
+def get_genre():
     return render_template('records.html', 
                            reviews=mongo.db.reviews.find())
 
 
-@app.route('/add_records')
+
+@app.route('/add_records/<username>', methods=['GET', 'POST'])
 @login_required
-def add_records():
+def add_records(username):
+    username = mongo.db.users.find_one({'username': username})
     return render_template('addrecords.html', 
-                           genra=mongo.db.genra.find())
+                           genre=mongo.db.genre.find())
 
 
 @app.route('/insert_reviews', methods=['POST'])
 @login_required
 def insert_reviews():
-    reviews =  mongo.db.reviews
-    reviews.insert_one(request.form.to_dict())
-    return redirect(url_for('get_genra'))
+    #reviews =  mongo.db.reviews
+    #reviews.insert_one(request.form.to_dict())
+    #return redirect(url_for('get_genre'))
+    
+    reviews = mongo.db.reviews
+    username = current_user.username
+    
+    artist_name = request.form['artist_name'].title()
+    genre_name = request.form['genre_name'].title()
+   
+    # Check if review with a given author and title already exists
+    existing_review = mongo.db.reviews.count_documents({'$and': 
+        [{'artist_name' : artist_name },
+        {'genre_name': genre_name }] 
+    })
+    
+     # Generate cover image link
+    image = generate_image(request.form.get('image'))
+    
+    # If review does not exist in the collection insert it    
+    if existing_review == 0:
+        reviews.insert_one({
+            'genre_name': request.form['genre_name'].title(),
+            'artist_name': request.form['artist_name'].title(),
+            'record_title': request.form['record_title'],
+            'image': image,
+            'added_by': username,
+            'record_description': request.form['record_description']
+        })
+        flash('Your record has now been successfully added.', 'success')
+    else: 
+        flash('Record already exists!', 'error')
+    return redirect(url_for('records'))
 
 
-
-@app.route('/show_records')
-@login_required
-def show_records():
-    return render_template('records.html')
+# Record image Generate image placeholder in cases when use does not provide a link
+    
+def generate_image(image_input):
+    # if no image is provided
+    if image_input == '':
+        image = "https://res.cloudinary.com/dpctylyfk/image/upload/v1592383030/music%20images/no-image_bwbufa.jpg"
+    else:
+        image = "https://res.cloudinary.com/dpctylyfk/image/upload/v1592383030/music%20images/no-image_bwbufa.jpg"
+    return image
 
 
 @app.route('/records')
@@ -91,7 +127,7 @@ def profile():
     user_review = mongo.db.reviews.find(
         {'added_by': username}).sort([("_id", -1)])
     '''
-    return render_template("profile.html")#, user=user, reviews=user_review)
+    return render_template("profile.html")
     
 
 #Registration
@@ -142,14 +178,15 @@ def load_user(username):
 
 #Delete user
 
-@app.route('/delete_profile/<user_id>')
+@app.route('/delete_profile/<user_id>', methods=['GET', 'POST'])
 @login_required
 def delete_profile(user_id):
     username = current_user.username
     mongo.db.reviews.remove({'added_by': username })
     mongo.db.users.remove({'_id': ObjectId(user_id)})
-
-    return render_template(url_for('index'))
+    
+    flash('Your account has been successfully deleted.', 'success')
+    return redirect(url_for('index'))
 
 
 
@@ -191,7 +228,8 @@ def logout():
 @app.route('/view_record')
 @login_required
 def view_record():
-    return render_template('viewrecord.html')
+    return render_template('viewrecord.html',
+                           reviews=mongo.db.reviews.find())
 
 
 if __name__ == '__main__':
