@@ -47,6 +47,39 @@ def index():
     return render_template("index.html")
 
 
+#---Registration form---
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    if current_user.is_authenticated:
+        flash('You are currently logged in!', 'info')
+        return redirect(url_for('index'))
+
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        existing_user = mongo.db.users.find_one(
+            {"username": form.username.data.lower() })
+        existing_email = mongo.db.users.find_one(
+            {"email": form.email.data})
+
+        if existing_user is None and existing_email is None:
+            password = generate_password_hash(request.form['password'], method='sha256')
+            mongo.db.users.insert_one({
+                                'username': request.form['username'].lower(),
+                                'email': request.form['email'],
+                                'password': password
+            })
+
+            flash(f'{form.username.data.lower()}, you are now a registered!', 'success')
+            return redirect(url_for('login'))
+
+        elif existing_user is not None:
+            flash('Username is already in use.', 'warning') 
+        else:
+            flash('Email is already in use.', 'warning')
+            
+    return render_template('register.html', form=form)
+
 @app.route('/get_genre')
 @login_required
 def get_genre():
@@ -54,6 +87,84 @@ def get_genre():
                            reviews=mongo.db.reviews.find())
 
 
+
+# ---User login---
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        flash('You are logged in!', 'info')
+        return redirect(url_for('profile'))
+
+    form = LoginForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        user = mongo.db.users.find_one({"username": form.username.data.lower()})
+        if user and User.check_password(user['password'], form.password.data):
+            user_obj = User(user['username'])
+            login_user(user_obj)
+
+            flash("You logged in", 'success')
+            return redirect(url_for('profile', username=current_user))
+
+        elif user is None:
+            flash("Username does not exist.", 'warning')
+        else:
+            flash("Wrong password.", 'error')
+
+    return render_template('login.html', form=form)
+
+
+#Callback used to reload the user object from the username 
+
+@login_manager.user_loader
+def load_user(username):
+    u = mongo.db.users.find_one({"username": username})
+    if not u:
+        return None
+        
+    return User(u['username'])
+
+
+#---User logout---
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
+
+
+
+#---User profile---
+
+@app.route('/profile')
+@login_required
+def profile():
+    '''
+    user = mongo.db.users.find_one({'username': username})
+    Find all reviews added by the user
+    user_review = mongo.db.reviews.find(
+        {'added_by': username}).sort([("_id", -1)])
+    '''
+    return render_template("profile.html")
+
+
+
+#---Delete user---
+
+@app.route('/delete_profile/<user_id>', methods=['GET', 'POST'])
+@login_required
+def delete_profile(user_id):
+    username = current_user.username
+    mongo.db.reviews.remove({'added_by': username })
+    mongo.db.users.remove({'_id': ObjectId(user_id)})
+    
+    flash('Your account has been successfully deleted.', 'success')
+    return redirect(url_for('index'))
+
+
+
+#---Select genre alternatives
 
 @app.route('/add_records/<username>', methods=['GET', 'POST'])
 @login_required
@@ -63,16 +174,15 @@ def add_records(username):
                            genre=mongo.db.genre.find())
 
 
+
+#---Insert reviews to records---
+
 @app.route('/insert_reviews', methods=['POST'])
 @login_required
 def insert_reviews():
-    #reviews =  mongo.db.reviews
-    #reviews.insert_one(request.form.to_dict())
-    #return redirect(url_for('get_genre'))
-    
     reviews = mongo.db.reviews
     username = current_user.username
-    
+
     artist_name = request.form['artist_name'].title()
     genre_name = request.form['genre_name'].title()
    
@@ -112,124 +222,26 @@ def generate_image(image_input):
     return image
 
 
+
+
+#---view all the records
+
 @app.route('/records')
 @login_required
 def records():
-    return render_template("records.html")
-
-
-@app.route('/profile')
-@login_required
-def profile():
-    '''
-    user = mongo.db.users.find_one({'username': username})
-    Find all reviews added by the user
-    user_review = mongo.db.reviews.find(
-        {'added_by': username}).sort([("_id", -1)])
-    '''
-    return render_template("profile.html")
-    
-
-#Registration
-
-@app.route('/register', methods=['GET', 'POST'])
-def register():
-    if current_user.is_authenticated:
-        flash('You are currently logged in!', 'info')
-        return redirect(url_for('index'))
-
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        existing_user = mongo.db.users.find_one(
-            {"username": form.username.data.lower() })
-        existing_email = mongo.db.users.find_one(
-            {"email": form.email.data})
-
-        if existing_user is None and existing_email is None:
-            password = generate_password_hash(request.form['password'], method='sha256')
-            mongo.db.users.insert_one({
-                                'username': request.form['username'].lower(),
-                                'email': request.form['email'],
-                                'password': password
-            })
-
-            flash(f'{form.username.data.lower()}, you are now a registered!', 'success')
-            return redirect(url_for('login'))
-
-        elif existing_user is not None:
-            flash('Username is already in use.', 'warning') 
-        else:
-            flash('Email is already in use.', 'warning')
-            
-    return render_template('register.html', form=form)
+    return render_template('records.html',
+                           reviews=mongo.db.reviews.find())
 
 
 
-#Callback used to reload the user object from the username 
-
-@login_manager.user_loader
-def load_user(username):
-    u = mongo.db.users.find_one({"username": username})
-    if not u:
-        return None
-        
-    return User(u['username'])
-
-
-#Delete user
-
-@app.route('/delete_profile/<user_id>', methods=['GET', 'POST'])
-@login_required
-def delete_profile(user_id):
-    username = current_user.username
-    mongo.db.reviews.remove({'added_by': username })
-    mongo.db.users.remove({'_id': ObjectId(user_id)})
-    
-    flash('Your account has been successfully deleted.', 'success')
-    return redirect(url_for('index'))
-
-
-
-#Login
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    if current_user.is_authenticated:
-        flash('You are logged in!', 'info')
-        return redirect(url_for('profile'))
-
-    form = LoginForm()
-    if request.method == 'POST' and form.validate_on_submit():
-        user = mongo.db.users.find_one({"username": form.username.data.lower()})
-        if user and User.check_password(user['password'], form.password.data):
-            user_obj = User(user['username'])
-            login_user(user_obj)
-
-            flash("You logged in", 'success')
-            return redirect(url_for('profile', username=current_user))
-
-        elif user is None:
-            flash("Username does not exist.", 'warning')
-        else:
-            flash("Wrong password.", 'error')
-
-    return render_template('login.html', form=form)
-
-
-#Logout
-
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    return redirect(url_for('index'))
-
+#---view a single record---
 
 @app.route('/view_record')
 @login_required
 def view_record():
     return render_template('viewrecord.html',
                            reviews=mongo.db.reviews.find())
+
 
 
 if __name__ == '__main__':
