@@ -169,9 +169,10 @@ def delete_profile(user_id):
 @app.route('/add_records/<username>', methods=['GET', 'POST'])
 @login_required
 def add_records(username):
-    username = mongo.db.users.find_one({'username': username})
-    return render_template('addrecords.html', 
-                           genre=mongo.db.genre.find())
+    user = mongo.db.users.find_one({'username': username})
+    return render_template('addrecords.html',
+                            user=user,
+                            genre=mongo.db.genre.find())
 
 
 
@@ -236,11 +237,15 @@ def records():
 
 #---view a single record---
 
-@app.route('/view_record')
+@app.route('/view_record/<record_id>')
 @login_required
-def view_record():
+def view_record(record_id):
+    view_record_id = mongo.db.comments.find_one({'_id': ObjectId(record_id)})
+    
     return render_template('viewrecord.html',
-                           reviews=mongo.db.reviews.find())
+                            record_id=view_record_id,
+                            reviews=mongo.db.reviews.find())
+                            
 
 
 
