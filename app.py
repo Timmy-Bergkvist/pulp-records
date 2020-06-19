@@ -162,15 +162,19 @@ def profile():
 
 #---Delete user---
 
-@app.route('/delete_profile/<user_id>', methods=['GET', 'POST'])
+@app.route('/delete_profile/<username>', methods=['GET', 'POST'])
 @login_required
-def delete_profile(user_id):
-    username = current_user.username
-    mongo.db.reviews.remove({'added_by': username })
-    mongo.db.users.remove({'_id': ObjectId(user_id)})
-    
-    flash('Your account has been successfully deleted.', 'success')
-    return redirect(url_for('index'))
+def delete_profile(username):
+     if session:
+        # Check if session user is the account owner
+        if session["username"] == username:
+            # Delete user from Users collection
+            mongo.db.users.delete_one({"username": username})
+
+            # Clear session data
+            session.pop("username", None)
+        flash('Your account has been successfully deleted.', 'success')
+        return redirect(url_for('index'))
 
 
 
