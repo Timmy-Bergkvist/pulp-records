@@ -1,5 +1,13 @@
 import os
+import re
+# Cloudinary API imports
 import cloudinary as Cloud
+import cloudinary
+import cloudinary.uploader
+from cloudinary.uploader import upload
+import cloudinary.api
+from cloudinary.utils import cloudinary_url
+
 from flask import Flask, render_template, redirect, request, url_for, flash, session
 from flask_mongoengine import MongoEngine, Document
 from flask_wtf import FlaskForm
@@ -31,6 +39,8 @@ Cloud.config.update = ({
     'api_key': os.getenv('CLOUDINARY_API_KEY'),
     'api_secret': os.getenv('CLOUDINARY_API_SECRET')
 })
+
+
 
 mongo = PyMongo(app)
 toastr = Toastr(app)
@@ -212,12 +222,16 @@ def insert_reviews():
     return redirect(url_for('records'))
 
 
+
+
 # Record image Generate image placeholder in cases when use does not provide a link
     
 def generate_image(image_input):
     # if no image is provided
     if image_input == '':
         image = "https://res.cloudinary.com/dpctylyfk/image/upload/v1592383030/music%20images/no-image_bwbufa.jpg"
+    if any(re.findall(r'jpeg|jpg|png', image_input, re.IGNORECASE)):
+        image = image_input
     else:
         image = "https://res.cloudinary.com/dpctylyfk/image/upload/v1592383030/music%20images/no-image_bwbufa.jpg"
     return image

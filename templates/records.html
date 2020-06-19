@@ -7,17 +7,16 @@
     {% for review in reviews %}
     <br>
     <div class="container center records-container">
-        <div class="row collection-item" href="#">
+        <div class="row collection-item">
             <div class="row col s12">
                 <div class="title div-label">{{ review.artist_name }}</div>
                 <div class="row">
-                    <div class="col s12"><img class="image-collection" src="{{ review.record_image }}"></div>
+                    <div class="col s12"><a href="{{url_for('view_record', record_id=record_id)}}"><img class="img-collection" src="{{ review.image }}"></a></div>
                     <div class="col s12 div-label"> {{ review.record_title }} </div>
                 </div>
                 <div class="col s12 div-label">{{ review.genre_name }}</div>
             </div>
         </div>
-        <div class="col l3 m4 s12 center-on-small-only"><a class="btn center grey darken-1" href="{{url_for('view_record', record_id=record_id)}}">View</a></div>
         <br>
     </div>
     {% endfor %} 
