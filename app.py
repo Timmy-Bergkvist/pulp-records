@@ -90,6 +90,8 @@ def register():
             
     return render_template('register.html', form=form)
 
+
+
 @app.route('/get_genre')
 @login_required
 def get_genre():
@@ -114,7 +116,7 @@ def login():
             login_user(user_obj)
 
             flash("You logged in", 'success')
-            return redirect(url_for('profile', username=current_user))
+            return redirect(url_for('index', username=current_user))
 
         elif user is None:
             flash("Username does not exist.", 'warning')
@@ -147,34 +149,41 @@ def logout():
 
 #---User profile---
 
-@app.route('/profile')
+@app.route('/profile/<username>')
 @login_required
-def profile():
-    '''
+def profile(username):
     user = mongo.db.users.find_one({'username': username})
-    Find all reviews added by the user
-    user_review = mongo.db.reviews.find(
-        {'added_by': username}).sort([("_id", -1)])
-    '''
-    return render_template("profile.html")
+
+    return render_template("profile.html", user=user)
 
 
 
 #---Delete user---
 
-@app.route('/delete_profile/<username>', methods=['GET', 'POST'])
+@app.route('/delete_profile/<user_id>')
 @login_required
-def delete_profile(username):
-     if session:
-        # Check if session user is the account owner
-        if session["username"] == username:
-            # Delete user from Users collection
-            mongo.db.users.delete_one({"username": username})
+def delete_profile(user_id):
+    username = current_user.username
+    # Remove reviews
+    mongo.db.reviews.remove({'added_by': username })
+    # Remove user
+    mongo.db.users.remove({'_id': ObjectId(user_id)})
+    session.clear()
 
-            # Clear session data
-            session.pop("username", None)
-        flash('Your account has been successfully deleted.', 'success')
-        return redirect(url_for('index'))
+    flash('Your account has been successfully deleted.', 'success')
+    return redirect(url_for('index'))
+
+
+#---Edit user---
+
+@app.route('/edit_review/<review_id>')
+@login_required
+def edit_review(review_id):
+    
+    edit_review =  mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
+    
+    return render_template('editreview.html', 
+                            review=edit_review)
 
 
 
