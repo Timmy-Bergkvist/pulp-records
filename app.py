@@ -164,7 +164,7 @@ def profile(username):
 @login_required
 def delete_profile(user_id):
     username = current_user.username
-    # Remove reviews
+    # Remove reviews by the user who added it
     mongo.db.reviews.remove({'added_by': username })
     # Remove user
     mongo.db.users.remove({'_id': ObjectId(user_id)})
@@ -267,11 +267,12 @@ def records():
 @app.route('/view_record/<record_id>')
 @login_required
 def view_record(record_id):
-    view_record_id = mongo.db.comments.find_one({'_id': ObjectId(record_id)})
     
+    review= mongo.db.reviews.find_one({'_id': ObjectId(record_id)})
+    username = current_user.username
     return render_template('viewrecord.html',
-                            record_id=view_record_id,
-                            reviews=mongo.db.reviews.find())
+                            review=review,
+                            reviews=mongo.db.comments.find())
                             
 
 
