@@ -2,7 +2,6 @@
 <br>
 <br>
 <div class="container" id="info-container">
-    
     <div class="container center">
         <div class="row collection-item">
             <div class="row">
@@ -16,12 +15,31 @@
                 <div class="col s12 div-label">{{ review.genre_name }}</div>
             </div>
             <div class="row">
-                <div class="col s12 record-description">{{ review.record_description}}</div>
+                <div class="col s12">
+                    <ul class="collapsible popout" data-collapsible="accordion">
+                        <li>
+                            <div class="collapsible-header">
+                                <div class="accordion_header">
+                                    <i class="material-icons left">expand_more</i>Tracklist</div>
+                            </div>
+                            <div class="collapsible-body">
+                                <span>{{review.tracklist}}</span>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header">
+                                <div class="accordion_header">
+                                    <i class="material-icons left">expand_more</i>Description</div>
+                            </div>
+                            <div class="collapsible-body">
+                                <span>{{review.record_description}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="col l3 m4 s12 center-on-small-only"><a class="btn waves-effect waves-light" href="#"><i class="material-icons right">local_library</i>Buy Record</a></div>
     </div>
-    
 </div>
 <br>
 <br>

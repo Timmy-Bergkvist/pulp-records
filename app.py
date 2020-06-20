@@ -207,12 +207,12 @@ def insert_reviews():
     reviews = mongo.db.reviews
     username = current_user.username
 
-    artist_name = request.form['artist_name'].title()
+    record_title = request.form['record_title'].title()
     genre_name = request.form['genre_name'].title()
-   
+
     # Check if review with a given author and title already exists
     existing_review = mongo.db.reviews.count_documents({'$and': 
-        [{'artist_name' : artist_name },
+        [{'record_title' : record_title },
         {'genre_name': genre_name }] 
     })
     
@@ -223,10 +223,11 @@ def insert_reviews():
     if existing_review == 0:
         reviews.insert_one({
             'genre_name': request.form['genre_name'].title(),
-            'artist_name': request.form['artist_name'].title(),
-            'record_title': request.form['record_title'],
+            'artist_name': request.form['artist_name'],
+            'record_title': request.form['record_title'].title(),
             'image': image,
             'added_by': username,
+            'tracklist': request.form['tracklist'],
             'record_description': request.form['record_description']
         })
         flash('Your record has now been successfully added.', 'success')

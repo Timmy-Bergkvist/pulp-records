@@ -9,25 +9,25 @@
                 <div id="recordfix" class="row">
                     <div class="input-field col s12">
                         <i class="material-icons prefix">poll</i>
-                        <select id="genre_name" name="genre_name">
-                    <option value="" disabled selected>Choose Genre</option>
-                    {% for gen in genre %}
-                        <option value="{{gen.genre_name}}">{{gen.genre_name}}</option>
-                    {% endfor %}
-                    </select>
+                        <select id="genre_name" name="genre_name" required>
+                            <option value="" disabled selected>Choose Genre</option>
+                            {% for gen in genre %}
+                            <option value="{{gen.genre_name}}">{{gen.genre_name}}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">record_voice_over</i>
-                    <input id="artist_name" name="artist_name" type="text" placeholder="Artist">
+                    <input id="artist_name" name="artist_name" type="text" placeholder="Artist" required>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">title</i>
-                    <input id="record_title" name="record_title" type="text" placeholder=" Record Title">
+                    <input id="record_title" name="record_title" type="text" placeholder=" Record Title" required>
                 </div>
             </div>
             <div class="row">
@@ -38,14 +38,14 @@
             </div>
             <div class="row">
                 <div class="input-field col s12">
-                    <i class="material-icons prefix">insert_link</i>
-                    <input id="product_link" name="product_link" type="text" placeholder="Link to Discogs">
+                    <i class="material-icons prefix">featured_play_list</i>
+                    <textarea  name="tracklist" id="tracklist" type="text" class="materialize-textarea" data-length="1000" placeholder="Tracklist" required></textarea>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">subject</i>
-                    <textarea name="record_description" id="record_description" class="materialize-textarea" data-length="500" placeholder="Bio"></textarea>
+                    <textarea name="record_description" id="record_description" class="materialize-textarea" data-length="2000" placeholder="Bio" required></textarea>
                 </div>
             </div>
             <div id="btn-box">

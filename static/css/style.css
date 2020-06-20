@@ -251,7 +251,12 @@ span, .error {
   max-height: 250px;
 }
 .img-collection:hover {
-  color: #dad3d246;
+  color: #dad3d246 !important;
+}
+/*----------------view record---------------*/
+.collapsible-body, span {
+  color: #F2F2F2 !important;
+  font-size: large;
 }
 
 /*---------------------------<-Footer->-------------------------------*/
