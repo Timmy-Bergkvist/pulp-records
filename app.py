@@ -217,7 +217,7 @@ def insert_reviews():
     })
     
      # Generate cover image link
-    image = generate_image(request.form.get('image'))
+    image_id = generate_image(request.form.get('image_id'))
     
     # If review does not exist in the collection insert it    
     if existing_review == 0:
@@ -225,7 +225,7 @@ def insert_reviews():
             'genre_name': request.form['genre_name'].title(),
             'artist_name': request.form['artist_name'],
             'record_title': request.form['record_title'].title(),
-            'image': image,
+            'image_id': image_id,
             'added_by': username,
             'tracklist': request.form['tracklist'],
             'record_description': request.form['record_description']
@@ -243,12 +243,12 @@ def insert_reviews():
 def generate_image(image_input):
     # if no image is provided
     if image_input == '':
-        image = "https://res.cloudinary.com/dpctylyfk/image/upload/v1592383030/music%20images/no-image_bwbufa.jpg"
+        image_id = "https://res.cloudinary.com/dpctylyfk/image/upload/v1592383030/music%20images/no-image_bwbufa.jpg"
     if any(re.findall(r'jpeg|jpg|png', image_input, re.IGNORECASE)):
-        image = image_input
+        image_id = image_input
     else:
-        image = "https://res.cloudinary.com/dpctylyfk/image/upload/v1592383030/music%20images/no-image_bwbufa.jpg"
-    return image
+        image_id = "https://res.cloudinary.com/dpctylyfk/image/upload/v1592383030/music%20images/no-image_bwbufa.jpg"
+    return image_id
 
 
 
