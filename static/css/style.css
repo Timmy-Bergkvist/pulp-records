@@ -251,6 +251,10 @@ span, .error {
   color: #F2F2F2 !important;
   font-size: large;
 }
+/*----------------edit record---------------*/
+.hiden-form{
+  display: none;
+}
 
 /*---------------------------<-Footer->-------------------------------*/
 footer.page-footer {

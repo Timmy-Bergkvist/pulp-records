@@ -46,6 +46,15 @@
                     <textarea  name="tracklist" id="tracklist" type="text" class="materialize-textarea" data-length="1000" placeholder="Tracklist" required>{{record.tracklist}}</textarea>
                 </div>
             </div>
+
+            <!--Hiden form-->
+            <div class="row hiden-form">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">face</i>
+                    <input id="added_by" name="added_by" type="text" value="{{ record.added_by }}" placeholder=" User name" required>
+                </div>
+            </div>
+
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">subject</i>
@@ -56,8 +65,8 @@
             <button class="btn waves-effect grey darken-1" type="submit" name="action">Update Record
                 <i class="material-icons right">update</i>
             </button>
-            <button class="btn waves-effect grey darken-1" href="{{url_for('index', record_id=record._id)}}">Cancel<i class="material-icons right">cancel</i>
-            </button>
+            <a href="{{ url_for('index') }}" class="waves-effect waves-light btn grey">
+                <i class="material-icons right">cancel</i>Cancel</a>
             </div>
         </form>
     </div>

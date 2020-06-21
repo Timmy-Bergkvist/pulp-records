@@ -154,7 +154,8 @@ def logout():
 def profile(username):
     user = mongo.db.users.find_one({'username': username})
 
-    return render_template("profile.html", user=user)
+    users_records = mongo.db.recordCollection.find({'added_by': username}).sort([("_id", -1)])
+    return render_template("profile.html", user=user, recordCollection=users_records)
 
 
 
@@ -180,10 +181,11 @@ def delete_profile(user_id):
 @app.route('/edit_record/<record_id>')
 @login_required
 def edit_record(record_id):
-    username = current_user.username
+    
     the_record = mongo.db.recordCollection.find_one({"_id": ObjectId(record_id)})
     the_genre = mongo.db.genre.find()
-    return render_template('editrecord.html', 
+    return render_template('editrecord.html',
+                            record_id=record_id, 
                             record=the_record,
                             genre=the_genre)
 
@@ -191,31 +193,30 @@ def edit_record(record_id):
 
 #---Update record---
 
-@app.route('/update_record/<record_id>', methods=["POST"])
+@app.route('/update_record/<record_id>', methods=['GET','POST'])
 @login_required
-def update_review(record_id):
-    recordCollection = mongo.db.recordCollection
+def update_record(record_id):
     
+    recordCollection = mongo.db.recordCollection
+    username = current_user.username
+
     record_title = request.form['record_title'].title()
     genre_name = request.form['genre_name'].title()
-    
-    # 
+    # Updade image
     image_id = generate_image(request.form.get('image_id'))
-        
-    # Update the review
+    # Update record information
     recordCollection.update({'_id': ObjectId(record_id)},
-    { '$set':
-        {
+    { 
         'genre_name': request.form.get('genre_name').title(),
         'artist_name': request.form.get('artist_name'),
         'record_title': request.form.get('record_title').title(),
-        'image_id': image_id,
+        'image_id': request.form.get('image_id'),
         'tracklist': request.form.get('tracklist'),
+        'added_by': request.form.get('added_by'),
         'record_description': request.form.get('record_description')
-        }
     })
     flash('Records have been updated!', 'success')
-    return redirect(url_for('records')) 
+    return redirect(url_for('records', record_id=record_id,)) 
 
 
 #---Delete record---
