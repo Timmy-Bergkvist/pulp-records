@@ -96,7 +96,7 @@ def register():
 @login_required
 def get_genre():
     return render_template('records.html', 
-                           reviews=mongo.db.reviews.find())
+                           recordCollection=mongo.db.recordCollection.find())
 
 
 
@@ -164,8 +164,8 @@ def profile(username):
 @login_required
 def delete_profile(user_id):
     username = current_user.username
-    # Remove reviews by the user who added it
-    mongo.db.reviews.remove({'added_by': username })
+    # All records will be deleted by the current user who inserted the records
+    mongo.db.recordCollection.remove({'added_by': username })
     # Remove user
     mongo.db.users.remove({'_id': ObjectId(user_id)})
     session.clear()
@@ -176,14 +176,14 @@ def delete_profile(user_id):
 
 #---Edit user---
 
-@app.route('/edit_review/<review_id>')
+@app.route('/edit_record/<record_id>')
 @login_required
-def edit_review(review_id):
+def edit_record(record_id):
     
-    edit_review =  mongo.db.reviews.find_one({"_id": ObjectId(review_id)})
+    edit_record =  mongo.db.recordCollection.find_one({"_id": ObjectId(record_id)})
     
-    return render_template('editreview.html', 
-                            review=edit_review)
+    return render_template('editrecord.html', 
+                            record=edit_record)
 
 
 
@@ -199,19 +199,19 @@ def add_records(username):
 
 
 
-#---Insert reviews to records---
+#---Insert record to records---
 
-@app.route('/insert_reviews', methods=['POST'])
+@app.route('/insert_records', methods=['POST'])
 @login_required
-def insert_reviews():
-    reviews = mongo.db.reviews
+def insert_records():
+    recordCollection = mongo.db.recordCollection
     username = current_user.username
 
     record_title = request.form['record_title'].title()
     genre_name = request.form['genre_name'].title()
 
-    # Check if review with a given author and title already exists
-    existing_review = mongo.db.reviews.count_documents({'$and': 
+    # Check if record with a given author and title already exists
+    existing_record = mongo.db.recordCollection.count_documents({'$and': 
         [{'record_title' : record_title },
         {'genre_name': genre_name }] 
     })
@@ -219,9 +219,9 @@ def insert_reviews():
      # Generate cover image link
     image_id = generate_image(request.form.get('image_id'))
     
-    # If review does not exist in the collection insert it    
-    if existing_review == 0:
-        reviews.insert_one({
+    # If record does not exist in the collection insert it    
+    if existing_record == 0:
+        recordCollection.insert_one({
             'genre_name': request.form['genre_name'].title(),
             'artist_name': request.form['artist_name'],
             'record_title': request.form['record_title'].title(),
@@ -259,7 +259,7 @@ def generate_image(image_input):
 @login_required
 def records():
     return render_template('records.html',
-                           reviews=mongo.db.reviews.find())
+                           recordCollection=mongo.db.recordCollection.find())
 
 
 
@@ -269,11 +269,11 @@ def records():
 @login_required
 def view_record(record_id):
     
-    review= mongo.db.reviews.find_one({'_id': ObjectId(record_id)})
+    record = mongo.db.recordCollection.find_one({'_id': ObjectId(record_id)})
     username = current_user.username
     return render_template('viewrecord.html',
-                            review=review,
-                            reviews=mongo.db.comments.find())
+                            record=record,
+                            recordCollection=mongo.db.comments.find())
                             
 
 

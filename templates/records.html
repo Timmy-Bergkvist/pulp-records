@@ -4,17 +4,17 @@
 <br>
 <div class="container" id="info-container">
     <h4 class="center h4header">Records</h4>
-    {% for review in reviews %}
+    {% for record in recordCollection %}
     <br>
     <div class="container center records-container">
         <div class="row collection-item">
             <div class="row col s12">
-                <div class="title div-label">{{ review.artist_name }}</div>
+                <div class="title div-label">{{ record.artist_name }}</div>
                 <div class="row">
-                    <div class="col s12"><a href="{{url_for('view_record', record_id=review._id)}}"><img class="img-collection" src="{{ review.image_id }}"></a></div>
-                    <div class="col s12 div-label"> {{ review.record_title }} </div>
+                    <div class="col s12"><a href="{{url_for('view_record', record_id=record._id)}}"><img class="img-collection" src="{{ record.image_id }}"></a></div>
+                    <div class="col s12 div-label"> {{ record.record_title }} </div>
                 </div>
-                <div class="col s12 div-label">{{ review.genre_name }}</div>
+                <div class="col s12 div-label">{{ record.genre_name }}</div>
             </div>
         </div>
         <br>
