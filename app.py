@@ -174,29 +174,57 @@ def delete_profile(user_id):
     return redirect(url_for('index'))
 
 
-#---Edit user---
+
+#---Edit records---
 
 @app.route('/edit_record/<record_id>')
 @login_required
 def edit_record(record_id):
-    
-    edit_record =  mongo.db.recordCollection.find_one({"_id": ObjectId(record_id)})
-    
+    username = current_user.username
+    the_record = mongo.db.recordCollection.find_one({"_id": ObjectId(record_id)})
+    the_genre = mongo.db.genre.find()
     return render_template('editrecord.html', 
-                            record=edit_record)
+                            record=the_record,
+                            genre=the_genre)
 
 
 
-#---Select genre alternatives
+#---Update record---
 
-@app.route('/add_records/<username>', methods=['GET', 'POST'])
+@app.route('/update_record/<record_id>', methods=["POST"])
 @login_required
-def add_records(username):
-    user = mongo.db.users.find_one({'username': username})
-    return render_template('addrecords.html',
-                            user=user,
-                            genre=mongo.db.genre.find())
+def update_review(record_id):
+    recordCollection = mongo.db.recordCollection
+    
+    record_title = request.form['record_title'].title()
+    genre_name = request.form['genre_name'].title()
+    
+    # 
+    image_id = generate_image(request.form.get('image_id'))
+        
+    # Update the review
+    recordCollection.update({'_id': ObjectId(record_id)},
+    { '$set':
+        {
+        'genre_name': request.form.get('genre_name').title(),
+        'artist_name': request.form.get('artist_name'),
+        'record_title': request.form.get('record_title').title(),
+        'image_id': image_id,
+        'tracklist': request.form.get('tracklist'),
+        'record_description': request.form.get('record_description')
+        }
+    })
+    flash('Records have been updated!', 'success')
+    return redirect(url_for('records')) 
 
+
+#---Delete record---
+
+@app.route('/delete_record/<record_id>')
+def delete_record(record_id):
+    mongo.db.recordCollection.remove({'_id': ObjectId(record_id)})
+    flash('Record have been deleted!', 'success')
+    return redirect(url_for('index'))
 
 
 #---Insert record to records---
@@ -237,6 +265,18 @@ def insert_records():
 
 
 
+#---Select genre alternatives
+
+@app.route('/add_records/<username>', methods=['GET', 'POST'])
+@login_required
+def add_records(username):
+    user = mongo.db.users.find_one({'username': username})
+    return render_template('addrecords.html',
+                            user=user,
+                            genre=mongo.db.genre.find())
+
+
+
 
 # Record image Generate image placeholder in cases when use does not provide a link
     
@@ -269,11 +309,10 @@ def records():
 @login_required
 def view_record(record_id):
     
-    record = mongo.db.recordCollection.find_one({'_id': ObjectId(record_id)})
+    the_record = mongo.db.recordCollection.find_one({'_id': ObjectId(record_id)})
     username = current_user.username
     return render_template('viewrecord.html',
-                            record=record,
-                            recordCollection=mongo.db.comments.find())
+                            record=the_record)
                             
 
 

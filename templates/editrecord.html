@@ -1,0 +1,67 @@
+{% extends 'base.html' %} {% block content %}
+<br>
+<br>
+<div class="container" id="info-container">
+    <h4 class="center h4header">Edit Record</h4>
+    <div class="row">
+        <form action="{{url_for('update_record', record_id=record._id)}}" method="POST" class="col s12">
+            <div class="row">
+                <div id="recordfix" class="row">
+                    <div class="input-field col s12">
+                        <i class="material-icons prefix">poll</i>
+                        <select id="genre_name" name="genre_name" required>
+                            <option value="" disabled selected>Choose Genre</option>
+                            {% for gen in genre %}
+                            {% if gen.genre == record.genre_name%}
+                            <option value="{{gen.genre_name}}"selected>{{gen.genre_name}}</option>
+                            {% else %}
+                            <option value="{{gen.genre_name}}">{{gen.genre_name}}</option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">record_voice_over</i>
+                    <input id="artist_name" name="artist_name" type="text" value="{{ record.artist_name }}" placeholder="Artist" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">title</i>
+                    <input id="record_title" name="record_title" type="text" value="{{ record.record_title }}" placeholder=" Record Title" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">image</i>
+                    <input id="image_id" name="image_id" type="text" value="{{ record.image_id }}" placeholder="Record Image">
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">featured_play_list</i>
+                    <textarea  name="tracklist" id="tracklist" type="text" class="materialize-textarea" data-length="1000" placeholder="Tracklist" required>{{record.tracklist}}</textarea>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <i class="material-icons prefix">subject</i>
+                    <textarea name="record_description" id="record_description" class="materialize-textarea" data-length="2000" placeholder="Record Description" required>{{record.record_description}}</textarea>
+                </div>
+            </div>
+            <div id="btn-box">
+            <button class="btn waves-effect grey darken-1" type="submit" name="action">Update Record
+                <i class="material-icons right">update</i>
+            </button>
+            <button class="btn waves-effect grey darken-1" href="{{url_for('index', record_id=record._id)}}">Cancel<i class="material-icons right">cancel</i>
+            </button>
+            </div>
+        </form>
+    </div>
+</div>
+<br>
+<br>
+{% endblock %}

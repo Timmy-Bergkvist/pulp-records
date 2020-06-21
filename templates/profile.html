@@ -10,9 +10,37 @@
         <br>
         <div class="col s12 div-label">Email: {{ user.email }}</div>
     </div>
+        <br>
     <div id="btn-box">
-        <a class="btn waves-effect waves-light teal lighten-2" href="#">Edit account<i class="material-icons right">build</i></a>
+        <br>
+        <br>
         <a class="btn waves-effect waves-light red darken-1" href="{{url_for('delete_profile', user_id=user._id)}}">Delete account<i class="material-icons right">delete_forever</i></a>
+        <br>
+        <br>
+        <div class="row center">
+            {% if current_user.username == record.added_by %}
+            <a class="waves-effect waves-light btn btn_small" href="{{url_for('edit_record', record_id=record._id)}}">Edit record<i class="material-icons right">build</i></a>
+            <a class="waves-effect waves-light btn btn_small" href="{{url_for('delete_record', record_id=record._id)}}">Delete record<i class="material-icons right">delete_forever</i></a>
+            {% endif %}    
+        </div>
+        {% for record in recordCollection %}
+        <br>
+        <div class="container center records-container">
+            <div class="row collection-item">
+                <div class="row col s12">
+                    <div class="title div-label">{{ record.artist_name }}</div>
+                    <div class="row">
+                        <a class="waves-effect waves-light btn btn_small" href="{{url_for('edit_record', record_id=record._id)}}">Edit record<i class="material-icons right">build</i></a>
+                        <a class="waves-effect waves-light btn btn_small" href="{{url_for('delete_record', record_id=record._id)}}">Delete record<i class="material-icons right">delete_forever</i></a>
+                        <div class="col s12 div-label"> {{ record.record_title }} </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        </div>
+        {% else %}
+        <p>No records added.</p>
+        {% endfor %}
     </div>
 </div>
 <br>
