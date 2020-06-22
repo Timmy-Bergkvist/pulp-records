@@ -125,7 +125,7 @@ As a user of this platform, I will be able to:
 I have used Mongodb database for this project
 - <a href="https://www.mongodb.com/cloud/atlas" target="_blank"> Mongodb </a>
 
-![Image of database](https://)
+![Image of database](https://timmy-bergkvist.github.io/pulp-records/static/images/database-structure.jpg)
 
  **Collection Name:**
  genre, recordCollection, users.
