@@ -1,13 +1,13 @@
 
 # pulp-records
-A record review and recommendation site
+A record collection and recommendation site.
 
 
 **Target Audience**
 
-  Pulp Records is a website for people who like music and want to share their favorite records and review them.
-  The website provides user with information about various music records and reviews.
-  On the platform there will be an option to create an account to review and add music records.
+  Pulp Records is a website for people who like music and want to share their favorite records.
+  The website provides user with information about various music records, description and a tracklist.
+  On the platform there will be an option to create an account to add music records.
 
 ## UX
 
@@ -35,11 +35,13 @@ As a user of this platform, I will be able to:
   
   - Have an option to login and logout of the account.
   
-  - Have an option to delete and edit my profile account.
+  - Have an option to delete and edit records of the user account.
   
-  - To leave a review.
+  - Have an option to delete user account.
   
-  - To be able to delete and edit content added by my.
+  - Have an option to upload a record with information about the band.
+  
+  - 
 
 **Mockups**
   
@@ -56,11 +58,35 @@ As a user of this platform, I will be able to:
 
 **Existing Features**
 
-- text
+- A registration form to sign up for the application.
+
+- A login form to access the application.
+
+- A personal profile page where the user can display his or hers added records.
+
+- A delete profile button to delete the user account and the records added by the user.
+
+- A edit and delete record function to update and delete the users records.
+
+- A nav bar that displays a Logo, Home, Records, Add Records, Profile and Login Log out urls.
+
+- Toast messages to highlight different right, wrong and info actions for the users.
 
 **Features Left to Implement**
 
-- text
+- A comment section to comment others records.
+
+- A edit user function to edit the username or email.
+
+- To set up a linkt to buy the records.
+
+- A search function to search for record title and artist.
+
+- Alerts popups to give the user a yes or no option, for delete and update.
+
+- An implementation to add new genres for other music alternatives.
+
+- A record selection function to select the genre so only that specific music records will be displayed.
 
 ## Technologies Used
 
@@ -99,7 +125,42 @@ As a user of this platform, I will be able to:
 I have used Mongodb database for this project
 - <a href="https://www.mongodb.com/cloud/atlas" target="_blank"> Mongodb </a>
 
-Database Picture
+![Image of database](https://)
+
+ **Collection Name:**
+ genre, recordCollection, users.
+ 
+ **recordCollection**
+ ```shell
+  {
+    _id: ObjectID(String),
+    genre_name: String,
+    artist_name: String,
+    record_title: String,
+    image_id: String,   
+    added_by: String,
+    record_description: String,
+    tracklist: String
+  }
+ ```
+ 
+ **users**
+ ```shell
+  {
+    _id: ObjectID(String),
+    username: String,
+    email: String,
+    password: Binary(String), // method='sha256'
+  }
+ ```
+ 
+ **genre**
+ ```shell
+  {
+    _id: ObjectID(String),
+    genre_name: string,
+  }
+ ```
 
 
 ## Testing 
@@ -127,7 +188,13 @@ Database Picture
  
  
   - Bugs
-    
+    ```shell
+       bug fix so collapsible header will stay and not bounce back up.
+       
+       document.getElementById("recordfix").addEventListener("click", function(e) {
+       e.stopPropagation();
+       });
+    ```
   
 ## Deployment
   
