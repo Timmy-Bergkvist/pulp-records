@@ -14,7 +14,7 @@ $(document).ready(function() {
   $('.tabs').tabs();
 })
 
-//Bug fix so that the task records can be displayed
+//Bug fix so that the records can be displayed
 document.getElementById("recordfix").addEventListener("click", function(e) {
   e.stopPropagation();
 });
