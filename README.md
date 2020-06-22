@@ -187,12 +187,23 @@ I have used Mongodb database for this project
     - http://pep8online.com/
   
 
-  - text
-  
-  - text
+|**Feature type**|**Feature**|**Tests**|**Bugs**|
+| :---: |:---:| :---:|:---:|
+|Button|Delete Account|Toast messages pops up after account is deleted. If record is deleted. If user is deleted from database|No Bugs|
+|Button|Delete Record|Toast messages pops up after record is deleted. Record is deleted in database. |No Bugs|
+|Button|Add Record|Toast messages pops up after record is added. Record is in the database. Information and image is displayed. If image is clickable. Url is connecting to right html|No Bugs|
+|Button|Edit Record|Url is connecting to right html|No Bugs|
+|Button|Update Record|Toast messages pops up after record has been updated. Sends the user to right html.|No Bugs|
+|Button|Get started|Sends the user to right html.|No Bugs|
+|Button|Login / Log out|Toast messages pops up after user login and log out|No Bugs|
+|Buttons|Nav bar|Sends the user to right html.|No Bugs|
+|Form|Register|Toast messages pops up after user is register. Sends the user to right html. User is in the database.|No Bugs|
+|Form|Login|Toast messages pops up after user has login. Sends the user to right html.|No Bugs|
+|Form|Add Record|Toast messages pops up after user has added a record. Sends the user to right html. Record is in the database.|No Bugs|
+|Form|Edit Record|Toast messages pops up after user has edited a record. Record is updated in database|No Bugs|
+            
 
- 
- 
+
   - Bugs
     ```shell
        bug fix so collapsible header will stay and not bounce back up.
@@ -321,5 +332,20 @@ V.    Set the environment variables on your Heroku settings.
 
    **Acknowledgements**
   - Inspiration for this project was obtained from:
+    - https://www.mountaingoatsoftware.com/agile/user-stories
+    
+    - https://cloudinary.com/documentation/solution_overview#architecture_and_concepts
+    
+    - https://www.discogs.com/
+    
+    - https://pixabay.com/
+    
+    - https://www.youtube.com/watch?v=8aTnmsDMldY&list=PLZMWJltr6TmCekz4-mY0_fec19HVS8G6W&index=28&t=1087s
+    
+    - https://www.youtube.com/watch?v=eu0tg4vgFr4&list=PLZMWJltr6TmCekz4-mY0_fec19HVS8G6W&index=26&t=0s
+    
+    - https://www.youtube.com/watch?v=S7ZLiUabaEo&list=PLZMWJltr6TmCekz4-mY0_fec19HVS8G6W&index=27&t=0s
+    
+    - https://www.youtube.com/watch?v=APOPm01BVrk&list=PLZMWJltr6TmCekz4-mY0_fec19HVS8G6W&index=18&t=254s
     
 I wanna say thank you to my mentor Oluwafemi Medale for helping me through this project.
