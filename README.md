@@ -134,13 +134,13 @@ I have used Mongodb database for this project
  ```shell
   {
     _id: ObjectID(String),
-    genre_name: String,
-    artist_name: String,
-    record_title: String,
-    image_id: String,   
-    added_by: String,
-    record_description: String,
-    tracklist: String
+    genre_name: String,         // Genre
+    artist_name: String,        // Name of the artist or band
+    record_title: String,       // Name of the record
+    image_id: String,           // Url for image
+    added_by: String,           // Added by user
+    record_description: String, // Description of the record
+    tracklist: String           // Tracklist for the record
   }
  ```
  
@@ -148,9 +148,9 @@ I have used Mongodb database for this project
  ```shell
   {
     _id: ObjectID(String),
-    username: String,
-    email: String,
-    password: Binary(String), // method='sha256'
+    username: String,           // User name to register
+    email: String,              // User email to register
+    password: Binary(String),   // method='sha256'
   }
  ```
  
@@ -158,7 +158,7 @@ I have used Mongodb database for this project
  ```shell
   {
     _id: ObjectID(String),
-    genre_name: string,
+    genre_name: string,         // Genre
   }
  ```
 
