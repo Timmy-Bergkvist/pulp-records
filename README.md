@@ -42,17 +42,18 @@ As a user of this platform, I will be able to:
   
   - Have an option to upload a record with information about the band.
   
-  - 
+  - Have an option to upload a image for the record.
+
 
 **Mockups**
   
   I have used Figma Mockups to visualize images I can work from.
 
-- <a href="" target="_blank">Desktop</a>
+- <a href="/static/images/mockup-desktop.jpg" target="_blank">Desktop</a>
 
-- <a href="" target="_blank">Phone</a>
+- <a href="/static/images/mockup-phone.png" target="_blank">Phone</a>
 
-- <a href="" target="_blank">Tablet</a>
+- <a href="/static/images/mockup-tablet.jpg" target="_blank">Tablet</a>
 
 
 ## Features
@@ -65,19 +66,23 @@ As a user of this platform, I will be able to:
 
 - A personal profile page where the user can display his or hers added records.
 
-- A delete profile button to delete the user account and the records added by the user.
+- A delete profile button to delete the user account and all the records added by the user.
 
-- A edit and delete record function to update and delete the users records.
+- Edit and Delete buttons to update and delete the users records.
 
-- A nav bar that displays a Logo, Home, Records, Add Records, Profile and Login Log out urls.
+- A nav bar that displays a Logo, Home, Records, Add Records, Profile, Login and Logout urls.
+
+- A hamburger menu button that will display options in tablet and phone mode.
 
 - Toast messages to highlight different right, wrong and info actions for the users.
+
+- Cancel button to cancel a form if the user decides not to fill in the form.
 
 **Features Left to Implement**
 
 - A comment section to comment others records.
 
-- A edit user function to edit the username or email.
+- A edit user function to edit the username, email or password.
 
 - To set up a linkt to buy the records.
 
@@ -317,3 +322,4 @@ V.    Set the environment variables on your Heroku settings.
    **Acknowledgements**
   - Inspiration for this project was obtained from:
     
+I wanna say thank you to my mentor Oluwafemi Medale for helping me through this project.
