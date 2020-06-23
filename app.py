@@ -116,7 +116,7 @@ def login():
             login_user(user_obj)
 
             flash("You logged in", 'success')
-            return redirect(url_for('index', username=current_user))
+            return redirect(url_for('index'))
 
         elif user is None:
             flash("Username does not exist.", 'warning')

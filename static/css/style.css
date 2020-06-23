@@ -28,8 +28,8 @@ header{
   background-color: rgba(153, 13, 13, 0.918) !important;
 }
 
-.image-section, .page-footer {
-  background-color: rgba(153, 13, 13, 0.918) !important;
+.image-section{
+  background-color: rgba(0, 0, 0, 0.8313725490196079) !important;
 }
 
 
@@ -259,6 +259,21 @@ span, .error {
 /*---------------------------<-Footer->-------------------------------*/
 footer.page-footer {
   margin: 0;
+  background-color:rgba(153, 13, 13);
+}
+
+.social-links{
+  padding-top: 20px;
+  text-align: center;
+}
+
+.social-links i:hover {
+  color: rgb(134, 144, 163);
+}
+
+.fa {
+  font-size: 30px;
+  color: #F2F2F2;
 }
 
 .teal {
