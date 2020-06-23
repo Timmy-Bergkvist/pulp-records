@@ -334,6 +334,10 @@ V.    Set the environment variables on your Heroku settings.
     - https://www.discogs.com/
 
     - https://pixabay.com/sv/
+    
+      Made the logo my self, image obtained from:
+    - https://www.pngwave.com/search?q=pulp
+    
 
    **Acknowledgements**
   - Inspiration for this project was obtained from:
