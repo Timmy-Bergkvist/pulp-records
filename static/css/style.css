@@ -66,7 +66,7 @@ header{
   background-color: rgba(153, 13, 13, 0.795);
 }
 
-#pulp-logo {
+.pulp-logo {
   width: 65px;
 }
 
@@ -178,7 +178,7 @@ nav{
 
 span, .error {
   color: #dad3d2;
-  padding-left: 45px;
+  /*padding-left: 45px;*/
   font-weight: 300;
 }
 

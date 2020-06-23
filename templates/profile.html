@@ -8,7 +8,7 @@
         <br><br>
         <div class="col s12 div-label">Email: {{ user.email }}</div>
     </div>
-        <br>
+    <br>
     <div id="btn-box">
         <br><br>
         <a class="btn waves-effect waves-light red darken-1" href="{{url_for('delete_profile', user_id=user._id)}}">Delete account<i class="material-icons right">delete_forever</i></a>
@@ -16,27 +16,29 @@
         <p>Your Records</p>
         <br>
         <div class="container center records-container">
-        <div class="row">
-            <ul class="collapsible" data-collapsible="accordion">
-                {% for record in recordCollection %}
-                <li>
-                    <div class="collapsible-header">
-                        <div class="div-lable center">{{record.artist_name}}</div>
-                    </div>
-                    <div class="collapsible-body">
-                        <span>
-                            <div class="div-lable">{{record.record_title}}</div>
-                            <div class="col s12"><img class="img-collection" src="{{ record.image_id }}"></div>
-                            <a href="{{url_for('edit_record', record_id=record._id)}}" class="waves-effect waves-light btn btn_small">Edit Record</a>
-                            <a href="{{url_for('delete_record', record_id=record._id)}}" class="waves-effect waves-light btn btn_small red">Delete Record</a>
-                        </span>
-                    </div>
-                </li>
-                {% endfor %}
-            </ul>
+            <div class="row">
+                <ul class="collapsible" data-collapsible="accordion">
+                    {% for record in recordCollection %}
+                    <li>
+                        <div class="collapsible-header">
+                            <div class="div-lable center">{{record.artist_name}}</div>
+                        </div>
+                        <div class="collapsible-body center">
+                            <div>
+                                <img alt="img-collection" class="img-collection" src="{{ record.image_id }}">
+                                <div class="div-lable center">{{record.record_title}}</div>
+                                <br>
+                                <a href="{{url_for('edit_record', record_id=record._id)}}" class="waves-effect waves-light btn btn_small">Edit Record</a>
+                                <a href="{{url_for('delete_record', record_id=record._id)}}" class="waves-effect waves-light btn btn_small red">Delete Record</a>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
         </div>
+        <br><br>
     </div>
-    <br><br>
 </div>
 <br><br>
 {% endblock %}

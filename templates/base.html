@@ -9,12 +9,10 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!--<link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>-->
-  <!--<link href="../static/css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>--->
   <link rel="stylesheet" href="{{url_for('static', filename='css/style.css')}}" type="text/css"/>
 </head>
 
-
+<body>
   <!--Navbar visible for logged in users -->
   
  <header> 
@@ -26,7 +24,7 @@
     {% if current_user.is_authenticated %}
     <div class="nav-wrapper container">
       <div>
-        <a href="{{url_for('index')}}"><img id="pulp-logo" src="../static/images/pulp-records-logo1.png"></a>
+        <a href="{{url_for('index')}}"><img alt="pulp-logo" class="pulp-logo" src="../static/images/pulp-records-logo1.png"></a>
       <ul class="right hide-on-med-and-down">
         <li><a href="{{url_for('index')}}">Home</a></li>
         <li><a href="{{url_for('records')}}">Records</a></li>
@@ -50,7 +48,7 @@
 
   <div class="nav-wrapper container">
     <div>
-      <a href="{{url_for('index')}}"><img id="pulp-logo" src="../static/images/pulp-records-logo1.png"></a>
+      <a href="{{url_for('index')}}"><img alt="pulp-logo" class="pulp-logo" src="../static/images/pulp-records-logo1.png"></a>
     <ul class="right hide-on-med-and-down">
       <li><a href="{{url_for('register')}}">Sign Up</a></li>
       <li><a href="{{url_for('login')}}">Log In</a></li>
@@ -72,7 +70,7 @@
 {% endblock %}
 </main>
   
-  <!---------------------Footer----------------------->
+  <!-- Footer -->
   <footer class="page-footer">
     <div class="container">
       <div class="row">
@@ -109,15 +107,15 @@
   </footer>
 
 
-  <!--  Scripts-->
-  <body>
+  <!-- Scripts -->
+  
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>--->
+  <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>-->
 
-  <!---<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
+  <!--<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>-->
   
 
   <script src="{{url_for('static', filename='js/script.js')}}"></script>
