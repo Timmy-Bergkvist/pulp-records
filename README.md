@@ -176,6 +176,10 @@ I have used Mongodb database for this project
 
   - The HTML code is run and tested at:
     - https://validator.w3.org/#validate_by_input
+    
+    If you run in test the code you will get Bad value and Text not allowed in element.
+    This is because I using <a href="https://en.wikipedia.org/wiki/Jinja_(template_engine)" target="_blank"> Jinja (template engine) </a>
+  
   
   - The CSS code is run and tested at:
     - https://jigsaw.w3.org/css-validator/#validate_by_input
