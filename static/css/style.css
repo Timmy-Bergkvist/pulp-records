@@ -127,7 +127,9 @@ textarea {
 
 #info-container {
   background-color: rgba(0, 0, 0, 0.71);
-  padding: 20px 50px 50px;
+  padding: 20px 30px 50px;
+  /*margin-left: 100px;
+  margin-right: 100px;*/
   /*margin-top: 50px;*/
 }
 
@@ -266,9 +268,14 @@ span, .error {
 
 
 /*----------------view record---------------*/
-.collapsible-body, span {
-  color: #F2F2F2 !important;
-  font-size: large;
+
+.div-record-description {
+  color: #F2F2F2;
+}
+
+.div-tracklist {
+  padding-top: 5px;
+  color: #F2F2F2;
 }
 
 /*----------------edit record---------------*/
@@ -278,7 +285,7 @@ span, .error {
 
 /*------------------profile-----------------*/
 
-.h6header {
+.p-header {
   font-family: 'Alfa Slab One', sans-serif;
   color: #F2F2F2;
 }

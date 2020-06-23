@@ -3,40 +3,25 @@
 <br>
 <div class="container" id="info-container">
     <div class="container center">
-        <div class="row collection-item">
+        
             <div class="row">
-                <div class="col s12 title div-label">{{ record.artist_name }}</div>
+                <div class="title div-label">{{ record.artist_name }}</div>
+                <br>
+                <div class="div-label">{{ record.genre_name }}</div>
             </div>
             <div class="row">
-                <div class="col s12"><img alt="img-collection" class="img-collection" src="{{ record.image_id }}"></div>
-                <div class="col s12 div-label"> {{ record.record_title }} </div>
-            </div>
-            <div class="row">
-                <div class="col s12 div-label">{{ record.genre_name }}</div>
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    <ul class="collapsible popout" data-collapsible="accordion">
-                        <li>
-                            <div class="collapsible-header">
-                                <div class="accordion_header">
-                                    <i class="material-icons left">expand_more</i>Tracklist</div>
-                            </div>
-                            <div class="collapsible-body">
-                                <span>{{record.tracklist}}</span>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="collapsible-header">
-                                <div class="accordion_header">
-                                    <i class="material-icons left">expand_more</i>Description</div>
-                            </div>
-                            <div class="collapsible-body">
-                                <span>{{record.record_description}}</span>
-                            </div>
-                        </li>
-                    </ul>
+                <div class="div-record-info col s12 m4 l4">
+                    <div class=""><img alt="img-collection" class="img-collection" src="{{ record.image_id }}"></div>
+                    <div class="div-label"> {{ record.record_title }} </div>
                 </div>
+                <div class="div-record-description col s12 m8 l8">
+                    {{record.record_description}}
+                </div>
+            </div>
+            <br>
+            <div class="div-tracklist col 12">
+                <p class="p-header">Tracklist</p>
+                {{record.tracklist}}
             </div>
             <div class="row center">
                 {% if current_user.username == record.added_by %}
@@ -44,7 +29,7 @@
                 <a class="waves-effect waves-light btn btn-small" href="{{url_for('delete_record', record_id=record._id)}}">Delete record<i class="material-icons right">delete_forever</i></a>
                 {% endif %}    
             </div>
-        </div>
+        
     </div>
 </div>
 <br>
