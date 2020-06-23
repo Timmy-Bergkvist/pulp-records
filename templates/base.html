@@ -20,7 +20,7 @@
   {{ toastr.include_toastr_css() }}
   {{ toastr.message() }}
   
-  <nav class="navbar" role="navigation">
+  <nav class="navbar">
     {% if current_user.is_authenticated %}
     <div class="nav-wrapper container">
       <div>
@@ -50,10 +50,14 @@
     <div>
       <a href="{{url_for('index')}}"><img alt="pulp-logo" class="pulp-logo" src="../static/images/pulp-records-logo1.png"></a>
     <ul class="right hide-on-med-and-down">
+      <li><a href="{{url_for('index')}}">Home</a></li>
+      <li><a href="{{url_for('records')}}">Records</a></li>
       <li><a href="{{url_for('register')}}">Sign Up</a></li>
       <li><a href="{{url_for('login')}}">Log In</a></li>
     </ul>
     <ul id="nav-mobile" class="sidenav">
+      <li><a href="{{url_for('index')}}">Home</a></li>
+      <li><a href="{{url_for('records')}}">Records</a></li>
       <li><a href="{{url_for('register')}}">Sign Up</a></li>
       <li><a href="{{url_for('login')}}">Log In</a></li>
     </ul>

@@ -297,7 +297,6 @@ def generate_image(image_input):
 #---view all the records
 
 @app.route('/records')
-@login_required
 def records():
     return render_template('records.html',
                            recordCollection=mongo.db.recordCollection.find())
@@ -307,11 +306,10 @@ def records():
 #---view a single record---
 
 @app.route('/view_record/<record_id>')
-@login_required
 def view_record(record_id):
     
     the_record = mongo.db.recordCollection.find_one({'_id': ObjectId(record_id)})
-    username = current_user.username
+    
     return render_template('viewrecord.html',
                             record=the_record)
                             
