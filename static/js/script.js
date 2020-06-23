@@ -5,6 +5,7 @@ $(document).ready(function() {
   $('.tabs').tabs();  // Function for tabs when you click on each tab.
   $('.sidenav').sidenav(); // Function for sidenav hamburger menu button.
   $('.parallax').parallax(); // Function for parallax background image.
+  $(".dropdown-trigger").dropdown();
 });
 
 

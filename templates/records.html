@@ -4,22 +4,18 @@
 <br>
 <div class="container" id="info-container">
     <h4 class="center h4header">Records</h4>
-    {% for record in recordCollection %}
     <br>
-    <div class="container center records-container">
-        <div class="row collection-item">
-            <div class="row col s12">
-                <div class="title div-label">{{ record.artist_name }}</div>
-                <div class="row">
-                    <div class="col s12"><a href="{{url_for('view_record', record_id=record._id)}}"><img alt="img-collection" class="img-collection" src="{{ record.image_id }}"></a></div>
-                    <div class="col s12 div-label"> {{ record.record_title }} </div>
-                </div>
-                <div class="col s12 div-label">{{ record.genre_name }}</div>
-            </div>
+    <div class="row col s12 m4 l4">
+        {% for record in recordCollection %}
+        <div class="collection-item center col s12 m4 l4">
+            <div class="div-label">{{ record.artist_name }}</div>
+            <div><a href="{{url_for('view_record', record_id=record._id)}}"><img alt="img-collection" class="img-collection" src="{{ record.image_id }}"></a></div>
+            <div class="div-label"> {{ record.record_title }} </div>
+            <br>
+            <div class="div-label">{{ record.genre_name }}</div>
         </div>
-        <br>
+        {% endfor %} 
     </div>
-    {% endfor %} 
 </div>
 <br>
 <br>
