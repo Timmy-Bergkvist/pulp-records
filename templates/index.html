@@ -24,14 +24,19 @@
 <!-- Icon Section -->
 <div class="image-section">
   <div class="container icon-cection">
+    <div class="center">
+      <a href="{{url_for('records')}}" id="index-records-btn" class="btn-small waves-effect waves-light yellow darken-1">View records!</a>
+    </div>
+    <br>
     <div class="section">
       <div class="row">
         <!--Displays the fourth latest added records-->
         {% for record in records %}
         <div class="col s12 m3">
           <div class="icon-block center">
-            <h6 class="record-images-name center">{{ record.artist_name }}</h6>
+            <p class="record-images-name center">{{ record.artist_name }}</p>
             <div class="record-images center">
+              
               <a href="{{url_for('view_record', record_id=record._id)}}"><img alt="test" class="img-collection" src="{{ record.image_id }}"></a>
             </div>
           </div>
@@ -45,9 +50,7 @@
 <div class="parallax-container valign-wrapper" id="parallax-container">
   <div class="section no-pad-bot">
     <div class="container">
-      <div class="row center">
-        <h4 class="header col s12 parallax-container-text"> </h4>
-      </div>
+     
     </div>
   </div>
 </div>
