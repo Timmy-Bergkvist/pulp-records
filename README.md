@@ -74,6 +74,8 @@ As a user of this platform, I will be able to:
 
 - A hamburger menu button that will display options in tablet and phone mode.
 
+- A sidenav that displays a Logo, Home, Records, Add Records, Profile, Login and Logout urls.
+
 - Toast messages to highlight different right, wrong and info actions for the users.
 
 - Cancel button to cancel a form if the user decides not to fill in the form.
@@ -87,6 +89,8 @@ As a user of this platform, I will be able to:
 - To set up a linkt to buy the records.
 
 - A search function to search for record title and artist.
+
+- Set the sidenav on the right page to make it more user friendly.
 
 - Alerts popups to give the user a yes or no option, for delete and update.
 

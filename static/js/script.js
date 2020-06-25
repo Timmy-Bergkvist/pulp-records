@@ -1,4 +1,10 @@
 
+document.addEventListener('DOMContentLoaded', function() {
+  const options = {edge: "left"}
+  const elems = document.querySelectorAll('.sidenav');
+  M.Sidenav.init(elems, options);
+});
+
 $(document).ready(function() {
   $('.collapsible').collapsible(); // Functions for the collapsible body.
   $('select').formSelect(); // Functions for the select input through specified options.

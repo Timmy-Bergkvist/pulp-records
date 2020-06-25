@@ -152,6 +152,17 @@ textarea {
 .nav-wrapper {
   width: 85% !important;
 }
+/*
+.sticky{
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sidenav-overlay {
+  position: relative !important;
+}
+*/
 
 nav .sidenav-trigger {
   float: right;

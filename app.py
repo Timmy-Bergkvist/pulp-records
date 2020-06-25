@@ -1,6 +1,8 @@
 import os
 import re
-# Cloudinary API imports
+"""
+Cloudinary API imports
+"""
 import cloudinary as Cloud
 import cloudinary
 import cloudinary.uploader
@@ -11,14 +13,14 @@ from cloudinary.utils import cloudinary_url
 from flask import Flask, render_template, redirect, request, url_for, flash, session
 from flask_mongoengine import MongoEngine, Document
 from flask_wtf import FlaskForm
-from routes.forms import LoginForm, RegistrationForm
+from utility.forms import LoginForm, RegistrationForm
+from utility.user import User
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, Email, Length, DataRequired, EqualTo
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from email_validator import validate_email, EmailNotValidError
 from flask_paginate import Pagination, get_page_args, get_page_parameter
-from routes.user import User
 from flask_toastr import Toastr
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
@@ -48,21 +50,25 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 
+# INDEX
+''' 
+Function with a route that will 
+direct you to home page.
+'''
+
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    '''
-    records = mongo.db.recordCollection.find(
-        {
-        "artist_name": "artist_name",
-        "image_id": "image_id"
-        }
-        ).sort([('image_id','artist_name')]).limit(4)
-    '''
-    return render_template("index.html")
+    # Displays the fourth latest added records.
+    records = mongo.db.recordCollection.find().sort([('timestamp', -1)]).limit(4)
+    return render_template("index.html", records=records)
 
 
-# Registration form
+# REGISTER
+""" 
+Registration function that enables user to 
+register and create an user account.
+"""
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -72,9 +78,11 @@ def register():
 
     form = RegistrationForm()
     if form.validate_on_submit():
+        # Register a unique username and email.
+        # Checks if the username and email already exist.
         existing_user = mongo.db.users.find_one({"username": form.username.data})
         existing_email = mongo.db.users.find_one({"email": form.email.data})
-
+        # If the username and email dont exist create a username, email and password.
         if existing_user is None and existing_email is None:
             password = generate_password_hash(request.form['password'], method='sha256')
             mongo.db.users.insert_one({
@@ -93,7 +101,11 @@ def register():
     return render_template('register.html', form=form)
 
 
-# ---User login---
+# LOGIN
+"""
+Function that logs in the user
+and Checks the password is correct.
+"""
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -104,6 +116,7 @@ def login():
     form = LoginForm()
     if request.method == 'POST' and form.validate_on_submit():
         user = mongo.db.users.find_one({"username": form.username.data})
+        # Checks if the password is correct.
         if user and User.check_password(user['password'], form.password.data):
             user_obj = User(user['username'])
             login_user(user_obj)
@@ -119,7 +132,11 @@ def login():
     return render_template('login.html', form=form)
 
 
-# -Callback used to reload the user object from the username
+# USER LOADER
+"""
+Callback used to reload the user
+object from the username.
+"""
 
 @login_manager.user_loader
 def load_user(username):
@@ -129,7 +146,10 @@ def load_user(username):
     return User(u['username'])
 
 
-# ---User logout---
+# LOGOUT
+"""
+Function that logs out user.
+"""
 
 @app.route('/logout')
 @login_required
@@ -138,7 +158,11 @@ def logout():
     return redirect(url_for('index'))
 
 
-# ---User profile---
+# PROFILE
+"""
+Function that displays username, email
+and displays all added records.
+"""
 
 @app.route('/profile/<username>')
 @login_required
@@ -149,7 +173,11 @@ def profile(username):
     return render_template("profile.html", user=user, recordCollection=users_records)
 
 
-# ---Delete user---
+# DELETE PROFILE
+"""
+Function that delete the profile and
+all records added by the current user.
+"""
 
 @app.route('/delete_profile/<user_id>')
 @login_required
@@ -165,7 +193,11 @@ def delete_profile(user_id):
     return redirect(url_for('index'))
 
 
-# ---Edit records---
+# EDIT RECORDS
+"""
+Function that allows the 
+current user to edit a record.
+"""
 
 @app.route('/edit_record/<record_id>')
 @login_required
@@ -175,7 +207,11 @@ def edit_record(record_id):
     return render_template('editrecord.html', record_id=record_id, record=the_record, genre=the_genre)
 
 
-# ---Update record---
+# UPDATE RECORDS
+"""
+Function that updates all 
+the information in the form.
+"""
 
 @app.route('/update_record/<record_id>', methods=['GET', 'POST'])
 @login_required
@@ -201,7 +237,11 @@ def update_record(record_id):
     return redirect(url_for('records', record_id=record_id,))
 
 
-# ---Delete record---
+#DELETE RECORD
+"""
+Function that allows the 
+current user to delete a record.
+"""
 
 @app.route('/delete_record/<record_id>')
 def delete_record(record_id):
@@ -210,7 +250,11 @@ def delete_record(record_id):
     return redirect(url_for('index'))
 
 
-# ---Insert record to records---
+# INSERT RECORD
+"""
+Function that inserts the record
+information to records template page.
+"""
 
 @app.route('/insert_records', methods=['POST'])
 @login_required
@@ -242,7 +286,11 @@ def insert_records():
     return redirect(url_for('records'))
 
 
-# ---Select genre alternatives
+# ADD RECORD TEMPLATE
+"""
+Function that renders add records template.
+From her the genre database is connected.
+"""
 
 @app.route('/add_records/<username>', methods=['GET', 'POST'])
 @login_required
@@ -251,20 +299,30 @@ def add_records(username):
     return render_template('addrecords.html', user=user, genre=mongo.db.genre.find())
 
 
-# Record image Generate image placeholder in cases when use does not provide a link
+# RECORD IMAGE
+"""
+Record image Generate image placeholder
+in cases when use does not provide a link.
+If no image is provided a link from 
+cloudinary will display no image record img.
+"""
 
 def generate_image(image_input):
     # if no image is provided
+    image_id = "https://res.cloudinary.com/dpctylyfk/image/upload/v1592383030/music%20images/no-image_bwbufa.jpg"
     if image_input == '':
-        image_id = "https://res.cloudinary.com/dpctylyfk/image/upload/v1592383030/music%20images/no-image_bwbufa.jpg"
+        image_id = image_id
     if any(re.findall(r'jpeg|jpg|png', image_input, re.IGNORECASE)):
         image_id = image_input
     else:
-        image_id = "https://res.cloudinary.com/dpctylyfk/image/upload/v1592383030/music%20images/no-image_bwbufa.jpg"
+        image_id
     return image_id
 
 
-# ---view all the records---
+#RECORDS
+"""
+Function that displays all records.
+"""
 
 @app.route('/records')
 def records():
@@ -280,7 +338,11 @@ def records():
     return render_template('records.html', recordCollection=mongo.db.recordCollection.find())
 
 
-# ---view a single record---
+# VIEW RECORD
+"""
+Function that displays a record when a 
+user click on a record in the records template.
+"""
 
 @app.route('/view_record/<record_id>')
 def view_record(record_id):
