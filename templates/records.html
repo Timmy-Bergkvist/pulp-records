@@ -11,11 +11,12 @@
             <div class="div-label">{{ record.artist_name }}</div>
             <div><a href="{{url_for('view_record', record_id=record._id)}}"><img alt="img-collection" class="img-collection" src="{{ record.image_id }}"></a></div>
             <div class="div-label"> {{ record.record_title }} </div>
-            <br>
             <div class="div-label">{{ record.genre_name }}</div>
+            <br>
         </div>
         {% endfor %} 
     </div>
+    <br>
 </div>
 <br>
 <br>

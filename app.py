@@ -17,6 +17,7 @@ from wtforms.validators import InputRequired, Email, Length, DataRequired, Equal
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from email_validator import validate_email, EmailNotValidError
+from flask_paginate import Pagination, get_page_args, get_page_parameter
 from routes.user import User
 from flask_toastr import Toastr
 from flask_pymongo import PyMongo
@@ -50,10 +51,17 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 
 
-
 @app.route('/')
-@app.route('/index')
+@app.route('/index', methods=['GET', 'POST'])
 def index():
+    '''
+    records = mongo.db.recordCollection.find(
+        {
+        "artist_name": "artist_name",
+        "image_id": "image_id"
+        }
+        ).sort([('image_id','artist_name')]).limit(4)
+    '''
     return render_template("index.html")
 
 
@@ -67,20 +75,18 @@ def register():
 
     form = RegistrationForm()
     if form.validate_on_submit():
-        existing_user = mongo.db.users.find_one(
-            {"username": form.username.data.lower() })
-        existing_email = mongo.db.users.find_one(
-            {"email": form.email.data})
+        existing_user = mongo.db.users.find_one({"username": form.username.data })
+        existing_email = mongo.db.users.find_one({"email": form.email.data})
 
         if existing_user is None and existing_email is None:
             password = generate_password_hash(request.form['password'], method='sha256')
             mongo.db.users.insert_one({
-                                'username': request.form['username'].lower(),
+                                'username': request.form['username'],
                                 'email': request.form['email'],
                                 'password': password
             })
 
-            flash(f'{form.username.data.lower()}, you are now a registered!', 'success')
+            flash(f'{form.username.data}, you are now a registered!', 'success')
             return redirect(url_for('login'))
 
         elif existing_user is not None:
@@ -110,7 +116,7 @@ def login():
 
     form = LoginForm()
     if request.method == 'POST' and form.validate_on_submit():
-        user = mongo.db.users.find_one({"username": form.username.data.lower()})
+        user = mongo.db.users.find_one({"username": form.username.data})
         if user and User.check_password(user['password'], form.password.data):
             user_obj = User(user['username'])
             login_user(user_obj)
@@ -298,8 +304,17 @@ def generate_image(image_input):
 
 @app.route('/records')
 def records():
+    '''
+    total = mongo.db.recordCollection.find()
+    page = request.args.get('get_page_parameter', 1, type=int)
+    pagination = collection.query.Pagination(page=page, total=total, per_page=10)
+    
+    total = mongo.db.recordCollection.find()
+    page = request.args.get('get_page_parameter', 1, type=int)
+    '''
+    
     return render_template('records.html',
-                           recordCollection=mongo.db.recordCollection.find())
+                            recordCollection=mongo.db.recordCollection.find())
 
 
 

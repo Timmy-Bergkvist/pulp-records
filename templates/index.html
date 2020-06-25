@@ -27,7 +27,16 @@
   <div class="container icon-cection">
     <div class="section">
       <div class="row">
-
+        <!-----        <div class="col s12 m3">
+          <div class="icon-block center">
+            {% for records in recordCollection %}
+            <div class="collection-item center col s12 m4 l4">
+              <div class="div-label">{{ records.artist_name }}</div>
+              <div><a href="{{url_for('view_record', record_id=record._id)}}"><img alt="img-collection" class="img-collection" src="{{ records.image_id }}"></a></div>
+            </div>
+            {% endfor %} 
+          </div>
+        </div>-->
         <div class="col s12 m3">
           <div class="icon-block center">
             <div class="record-images center">
