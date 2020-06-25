@@ -176,8 +176,7 @@ I have used Mongodb database for this project
 
   - The HTML code is run and tested at:
     - https://validator.w3.org/#validate_by_input
-    
-    If you run the code you will get Bad value and Text not allowed in element.
+    - If you run the code you will get Bad value and Text not allowed in element.
     This is because Im using
     <a href="https://en.wikipedia.org/wiki/Jinja_(template_engine)" target="_blank"> Jinja (template engine)</a>
   
@@ -190,7 +189,7 @@ I have used Mongodb database for this project
     
   - The Python is run and tested at:
     - http://pep8online.com/
-  If you run the code you will get the result E501 line too long.
+    - If you run the code you will get the result E501 line too long.
 
 |**Feature type**|**Feature**|**Tests**|**Bugs**|
 | :---: |:---:| :---:|:---:|
@@ -211,7 +210,7 @@ I have used Mongodb database for this project
 
   - Bugs
 
-  - Bug collapsible header will not working on the first click.
+  - Collapsible header will not working on the first click.
 
     ```shell
        Bug fix so collapsible header will stay on the first click.
