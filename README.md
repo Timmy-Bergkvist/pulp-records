@@ -205,11 +205,15 @@ I have used Mongodb database for this project
 |Button|Get started|Sends the user to right html.|No Bugs|
 |Button|Login / Log out|Toast messages pops up after user login and log out|No Bugs|
 |Buttons|Nav bar|Sends the user to right html.|No Bugs|
-|Form|Register|Toast messages pops up after user is register. Sends the user to right html. User is in the database.|No Bugs|
-|Form|Login|Toast messages pops up after user has login. Sends the user to right html.|No Bugs|
+|Form|Register|Toast messages pops up after user is register. Sends the user to right html. User is in the database. User email and name is unique.|No Bugs|
+|Form|Login|Toast messages pops up after user has login. Sends the user to right html. User need correct password. User need correct username|No Bugs|
 |Form|Add Record|Toast messages pops up after user has added a record. Sends the user to right html. Record is in the database.|No Bugs|
 |Form|Edit Record|Toast messages pops up after user has edited a record. Record is updated in database|No Bugs|
-            
+|Structure|Navbar|Works in mobile and tablet view. Sends the user to right html.|No Bugs|
+|Structure|Sidenav|Works in mobile and tablet view. Sends the user to right html.|No Bugs|
+|Structure|Image Section|Images is displayed. Sends the user to right html.|Issue to get the latest images|
+|Structure|Footer|Footer stays at the bottom of the page. Twitter and Facebook links work.|No Bugs|
+
 
 
   - Bugs
