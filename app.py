@@ -36,16 +36,13 @@ app.config["MONGO_URI"] = os.getenv('MONGO_URI', 'mongodb://localhost')
 app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 Cloud.config.update = ({
-    'cloud_name':os.getenv('CLOUDINARY_CLOUD_NAME'),
+    'cloud_name': os.getenv('CLOUDINARY_CLOUD_NAME'),
     'api_key': os.getenv('CLOUDINARY_API_KEY'),
     'api_secret': os.getenv('CLOUDINARY_API_SECRET')
 })
 
-
-
 mongo = PyMongo(app)
 toastr = Toastr(app)
-
 db = MongoEngine(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
@@ -65,7 +62,7 @@ def index():
     return render_template("index.html")
 
 
-#---Registration form---
+# Registration form
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -75,7 +72,7 @@ def register():
 
     form = RegistrationForm()
     if form.validate_on_submit():
-        existing_user = mongo.db.users.find_one({"username": form.username.data })
+        existing_user = mongo.db.users.find_one({"username": form.username.data})
         existing_email = mongo.db.users.find_one({"email": form.email.data})
 
         if existing_user is None and existing_email is None:
@@ -90,20 +87,10 @@ def register():
             return redirect(url_for('login'))
 
         elif existing_user is not None:
-            flash('Username is already in use.', 'warning') 
+            flash('Username is already in use.', 'warning')
         else:
             flash('Email is already in use.', 'warning')
-            
     return render_template('register.html', form=form)
-
-
-
-@app.route('/get_genre')
-@login_required
-def get_genre():
-    return render_template('records.html', 
-                           recordCollection=mongo.db.recordCollection.find())
-
 
 
 # ---User login---
@@ -132,18 +119,17 @@ def login():
     return render_template('login.html', form=form)
 
 
-#Callback used to reload the user object from the username 
+# -Callback used to reload the user object from the username
 
 @login_manager.user_loader
 def load_user(username):
     u = mongo.db.users.find_one({"username": username})
     if not u:
         return None
-        
     return User(u['username'])
 
 
-#---User logout---
+# ---User logout---
 
 @app.route('/logout')
 @login_required
@@ -152,8 +138,7 @@ def logout():
     return redirect(url_for('index'))
 
 
-
-#---User profile---
+# ---User profile---
 
 @app.route('/profile/<username>')
 @login_required
@@ -164,15 +149,14 @@ def profile(username):
     return render_template("profile.html", user=user, recordCollection=users_records)
 
 
-
-#---Delete user---
+# ---Delete user---
 
 @app.route('/delete_profile/<user_id>')
 @login_required
 def delete_profile(user_id):
     username = current_user.username
     # All records will be deleted by the current user who inserted the records
-    mongo.db.recordCollection.remove({'added_by': username })
+    mongo.db.recordCollection.remove({'added_by': username})
     # Remove user
     mongo.db.users.remove({'_id': ObjectId(user_id)})
     session.clear()
@@ -181,38 +165,30 @@ def delete_profile(user_id):
     return redirect(url_for('index'))
 
 
-
-#---Edit records---
+# ---Edit records---
 
 @app.route('/edit_record/<record_id>')
 @login_required
 def edit_record(record_id):
-    
     the_record = mongo.db.recordCollection.find_one({"_id": ObjectId(record_id)})
     the_genre = mongo.db.genre.find()
-    return render_template('editrecord.html',
-                            record_id=record_id, 
-                            record=the_record,
-                            genre=the_genre)
+    return render_template('editrecord.html', record_id=record_id, record=the_record, genre=the_genre)
 
 
+# ---Update record---
 
-#---Update record---
-
-@app.route('/update_record/<record_id>', methods=['GET','POST'])
+@app.route('/update_record/<record_id>', methods=['GET', 'POST'])
 @login_required
 def update_record(record_id):
-    
     recordCollection = mongo.db.recordCollection
     username = current_user.username
-
+    # Update record title and genre
     record_title = request.form['record_title'].title()
     genre_name = request.form['genre_name'].title()
     # Updade image
     image_id = generate_image(request.form.get('image_id'))
     # Update record information
-    recordCollection.update({'_id': ObjectId(record_id)},
-    { 
+    recordCollection.update({'_id': ObjectId(record_id)}, {
         'genre_name': request.form.get('genre_name').title(),
         'artist_name': request.form.get('artist_name'),
         'record_title': request.form.get('record_title').title(),
@@ -220,12 +196,12 @@ def update_record(record_id):
         'tracklist': request.form.get('tracklist'),
         'added_by': request.form.get('added_by'),
         'record_description': request.form.get('record_description')
-    })
+        })
     flash('Records have been updated!', 'success')
-    return redirect(url_for('records', record_id=record_id,)) 
+    return redirect(url_for('records', record_id=record_id,))
 
 
-#---Delete record---
+# ---Delete record---
 
 @app.route('/delete_record/<record_id>')
 def delete_record(record_id):
@@ -234,7 +210,7 @@ def delete_record(record_id):
     return redirect(url_for('index'))
 
 
-#---Insert record to records---
+# ---Insert record to records---
 
 @app.route('/insert_records', methods=['POST'])
 @login_required
@@ -246,15 +222,10 @@ def insert_records():
     genre_name = request.form['genre_name'].title()
 
     # Check if record with a given author and title already exists
-    existing_record = mongo.db.recordCollection.count_documents({'$and': 
-        [{'record_title' : record_title },
-        {'genre_name': genre_name }] 
-    })
-    
-     # Generate cover image link
+    existing_record = mongo.db.recordCollection.count_documents({'$and': [{'record_title': record_title}, {'genre_name': genre_name}]})
+    # Generate cover image link
     image_id = generate_image(request.form.get('image_id'))
-    
-    # If record does not exist in the collection insert it    
+    # If record does not exist in the collection insert it
     if existing_record == 0:
         recordCollection.insert_one({
             'genre_name': request.form['genre_name'].title(),
@@ -266,27 +237,22 @@ def insert_records():
             'record_description': request.form['record_description']
         })
         flash('Your record has now been successfully added.', 'success')
-    else: 
+    else:
         flash('Record already exists!', 'error')
     return redirect(url_for('records'))
 
 
-
-#---Select genre alternatives
+# ---Select genre alternatives
 
 @app.route('/add_records/<username>', methods=['GET', 'POST'])
 @login_required
 def add_records(username):
     user = mongo.db.users.find_one({'username': username})
-    return render_template('addrecords.html',
-                            user=user,
-                            genre=mongo.db.genre.find())
-
-
+    return render_template('addrecords.html', user=user, genre=mongo.db.genre.find())
 
 
 # Record image Generate image placeholder in cases when use does not provide a link
-    
+
 def generate_image(image_input):
     # if no image is provided
     if image_input == '':
@@ -298,9 +264,7 @@ def generate_image(image_input):
     return image_id
 
 
-
-
-#---view all the records
+# ---view all the records---
 
 @app.route('/records')
 def records():
@@ -308,27 +272,21 @@ def records():
     total = mongo.db.recordCollection.find()
     page = request.args.get('get_page_parameter', 1, type=int)
     pagination = collection.query.Pagination(page=page, total=total, per_page=10)
-    
+
     total = mongo.db.recordCollection.find()
     page = request.args.get('get_page_parameter', 1, type=int)
     '''
-    
-    return render_template('records.html',
-                            recordCollection=mongo.db.recordCollection.find())
+
+    return render_template('records.html', recordCollection=mongo.db.recordCollection.find())
 
 
-
-#---view a single record---
+# ---view a single record---
 
 @app.route('/view_record/<record_id>')
 def view_record(record_id):
-    
     the_record = mongo.db.recordCollection.find_one({'_id': ObjectId(record_id)})
-    
-    return render_template('viewrecord.html',
-                            record=the_record)
-                            
 
+    return render_template('viewrecord.html', record=the_record)
 
 
 if __name__ == '__main__':

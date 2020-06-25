@@ -190,13 +190,13 @@ I have used Mongodb database for this project
     
   - The Python is run and tested at:
     - http://pep8online.com/
-  
+  If you run the code you will get the result E501 line too long.
 
 |**Feature type**|**Feature**|**Tests**|**Bugs**|
 | :---: |:---:| :---:|:---:|
 |Button|Delete Account|Toast messages pops up after account is deleted. If record is deleted. If user is deleted from database|No Bugs|
 |Button|Delete Record|Toast messages pops up after record is deleted. Record is deleted in database. |No Bugs|
-|Button|Add Record|Toast messages pops up after record is added. Record is in the database. Information and image is displayed. If image is clickable. Url is connecting to right html|No Bugs|
+|Button|Add Record|Toast messages pops up after record is added. Record is in the database. Information and image is displayed. If image is clickable. Url is connecting to right html|Issue to place image in a row.|
 |Button|Edit Record|Url is connecting to right html|No Bugs|
 |Button|Update Record|Toast messages pops up after record has been updated. Sends the user to right html.|No Bugs|
 |Button|Get started|Sends the user to right html.|No Bugs|
@@ -210,9 +210,12 @@ I have used Mongodb database for this project
 
 
   - Bugs
+
+  - Bug collapsible header will not working on the first click.
+
     ```shell
-       bug fix so collapsible header will stay and not bounce back up.
-       
+       Bug fix so collapsible header will stay on the first click.
+
        document.getElementById("recordfix").addEventListener("click", function(e) {
        e.stopPropagation();
        });
