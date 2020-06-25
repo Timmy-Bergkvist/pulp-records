@@ -2,7 +2,7 @@
 # pulp-records
 A record collection and recommendation site.
 
-![Image of responsive](https://timmy-bergkvist.github.io/pulp-records/static/images/responsivedesign.jpg)
+![Image of responsive](https://timmy-bergkvist.github.io/pulp-records/static/images/responsive-design.jpg)
 
 **Target Audience**
 
