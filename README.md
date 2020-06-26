@@ -7,14 +7,14 @@ A record collection and recommendation site.
 **Target Audience**
 
   Pulp Records is a website for people who like music and want to share their favorite records.
-  The website provides user with information about various music records, description and a tracklist.
+  The website provides the user with information about various music records, description and a tracklist.
   On the platform there will be an option to create an account to add music records.
 
 ## UX
 
 **Project sections:**
 
-  - Homepage: Containing a welcome message to sign up to the account with a logo and some info at the bottom.
+  - Homepage: Containing a welcome message and a button that will redirect the user to a sign up form.
   
   - Sign up form: Containing a form that enables user to sign up for the app.
 
@@ -26,7 +26,7 @@ A record collection and recommendation site.
   
   - Records: A page displaying all the records.
   
-  - View Record: A page that contains all the information, reviews and a link to buy the record.
+  - View Record: A page that contains all the information about the chosen record.
 
 **User Stories**
 
@@ -86,7 +86,7 @@ As a user of this platform, I will be able to:
 
 - A edit user function to edit the username, email or password.
 
-- To set up a linkt to buy the records.
+- To set up a link to buy the records.
 
 - A search function to search for record title and artist.
 
@@ -96,7 +96,7 @@ As a user of this platform, I will be able to:
 
 - An implementation to add new genres for other music alternatives.
 
-- A record selection function to select the genre so only that specific music records will be displayed.
+- A record selection function which enables the user to filter the records by genre.
 
 ## Technologies Used
 
@@ -120,7 +120,7 @@ As a user of this platform, I will be able to:
 
 - <a href="https://en.wikipedia.org/wiki/Flask_(web_framework)" target="_blank"> Flask </a>
 
-- <a href="https://materializecss.com/" target="_blank"> materializecss </a>
+- <a href="https://materializecss.com/" target="_blank"> Materializecss </a>
 
 **Other**
 
@@ -175,13 +175,13 @@ I have used Mongodb database for this project
 
 ## Testing 
 
-  - The responsive is run and tested at:
+  - The responsiveness is run and tested at:
     - http://ami.responsivedesign.is/#
 
   - The HTML code is run and tested at:
     - https://validator.w3.org/#validate_by_input
     - If you run the code you will get Bad value and Text not allowed in element.
-    This is because Im using
+    This is because I'm using
     <a href="https://en.wikipedia.org/wiki/Jinja_(template_engine)" target="_blank"> Jinja (template engine)</a>
   
   
@@ -218,7 +218,7 @@ I have used Mongodb database for this project
 
   - Bugs
 
-  - Collapsible header will not working on the first click.
+  - Collapsible header will not work on the first click.
 
     ```shell
        Bug fix so collapsible header will stay on the first click.
@@ -229,6 +229,11 @@ I have used Mongodb database for this project
     ```
   
 ## Deployment
+  
+  
+ The hosting platform for this project is Heroku and can be run directly here: 
+ https://pulp-records.herokuapp.com/ 
+  
   
 To run this project you need the following tools installed:
 
@@ -264,7 +269,7 @@ For more information:
 https://code.visualstudio.com/docs/python/environments
 ```
 
-  IV.   Install all the package that's needed
+  IV.   Install all the packages that are required
 ```shell
 pip install Flask
 pip install pymongo
@@ -345,7 +350,7 @@ V.    Set the environment variables on your Heroku settings.
 
     - https://pixabay.com/sv/
     
-      Made the logo my self, image obtained from:
+      Made the logo myself, image obtained from:
     - https://www.pngwave.com/search?q=pulp
     
 
