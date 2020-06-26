@@ -129,6 +129,8 @@ As a user of this platform, I will be able to:
 - <a href="https://code.visualstudio.com/" target="_blank"> VS Code </a>
 
 - <a href="https://www.figma.com/" target="_blank"> Figma </a>
+
+- <a href="https://cloudinary.com/documentation/solution_overview#architecture_and_concepts" target="_blank"> Cloudinary </a>
   
 ## Database structure
 
@@ -213,6 +215,7 @@ I have used Mongodb database for this project
 |Structure|Sidenav|Works in mobile and tablet view. Sends the user to right html.|No Bugs|
 |Structure|Image Section|Images is displayed. Sends the user to right html.|Issue to get the latest images|
 |Structure|Footer|Footer stays at the bottom of the page. Twitter and Facebook links work.|No Bugs|
+|Structure|Image|Gets the api from Cloudinary.|No Bugs|
 
 
 
@@ -353,12 +356,11 @@ V.    Set the environment variables on your Heroku settings.
       Made the logo myself, image obtained from:
     - https://www.pngwave.com/search?q=pulp
     
+    - https://cloudinary.com/documentation/solution_overview#architecture_and_concepts
 
    **Acknowledgements**
   - Inspiration for this project was obtained from:
     - https://www.mountaingoatsoftware.com/agile/user-stories
-    
-    - https://cloudinary.com/documentation/solution_overview#architecture_and_concepts
     
     - https://www.discogs.com/
     
