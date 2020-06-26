@@ -51,10 +51,11 @@ login_manager.login_view = 'login'
 
 
 # INDEX
-''' 
-Function with a route that will 
+'''
+Function with a route that will
 direct you to home page.
 '''
+
 
 @app.route('/')
 @app.route('/index', methods=['GET', 'POST'])
@@ -65,10 +66,11 @@ def index():
 
 
 # REGISTER
-""" 
-Registration function that enables user to 
+"""
+Registration function that enables user to
 register and create an user account.
 """
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -107,6 +109,7 @@ Function that logs in the user
 and Checks the password is correct.
 """
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
@@ -138,6 +141,7 @@ Callback used to reload the user
 object from the username.
 """
 
+
 @login_manager.user_loader
 def load_user(username):
     u = mongo.db.users.find_one({"username": username})
@@ -151,6 +155,7 @@ def load_user(username):
 Function that logs out user.
 """
 
+
 @app.route('/logout')
 @login_required
 def logout():
@@ -163,6 +168,7 @@ def logout():
 Function that displays username, email
 and displays all added records.
 """
+
 
 @app.route('/profile/<username>')
 @login_required
@@ -178,6 +184,7 @@ def profile(username):
 Function that delete the profile and
 all records added by the current user.
 """
+
 
 @app.route('/delete_profile/<user_id>')
 @login_required
@@ -195,9 +202,10 @@ def delete_profile(user_id):
 
 # EDIT RECORDS
 """
-Function that allows the 
+Function that allows the
 current user to edit a record.
 """
+
 
 @app.route('/edit_record/<record_id>')
 @login_required
@@ -209,9 +217,10 @@ def edit_record(record_id):
 
 # UPDATE RECORDS
 """
-Function that updates all 
+Function that updates all
 the information in the form.
 """
+
 
 @app.route('/update_record/<record_id>', methods=['GET', 'POST'])
 @login_required
@@ -237,11 +246,12 @@ def update_record(record_id):
     return redirect(url_for('records', record_id=record_id,))
 
 
-#DELETE RECORD
+# DELETE RECORD
 """
-Function that allows the 
+Function that allows the
 current user to delete a record.
 """
+
 
 @app.route('/delete_record/<record_id>')
 def delete_record(record_id):
@@ -255,6 +265,7 @@ def delete_record(record_id):
 Function that inserts the record
 information to records template page.
 """
+
 
 @app.route('/insert_records', methods=['POST'])
 @login_required
@@ -292,6 +303,7 @@ Function that renders add records template.
 From her the genre database is connected.
 """
 
+
 @app.route('/add_records/<username>', methods=['GET', 'POST'])
 @login_required
 def add_records(username):
@@ -303,9 +315,10 @@ def add_records(username):
 """
 Record image Generate image placeholder
 in cases when use does not provide a link.
-If no image is provided a link from 
+If no image is provided a link from
 cloudinary will display no image record img.
 """
+
 
 def generate_image(image_input):
     # if no image is provided
@@ -319,10 +332,11 @@ def generate_image(image_input):
     return image_id
 
 
-#RECORDS
+# RECORDS
 """
 Function that displays all records.
 """
+
 
 @app.route('/records')
 def records():
@@ -340,9 +354,10 @@ def records():
 
 # VIEW RECORD
 """
-Function that displays a record when a 
+Function that displays a record when a
 user click on a record in the records template.
 """
+
 
 @app.route('/view_record/<record_id>')
 def view_record(record_id):

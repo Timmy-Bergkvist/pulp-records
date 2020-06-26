@@ -4,17 +4,18 @@
 <br>
 <div class="container" id="info-container">
   <h4 class="center h4header">Login</h4>
+  <!-- Form input to login -->
   <form action="/login" method="POST">
-      <div class="row">
-          <div class="input-field col s12 div-label">Username: {{ form.username }}</div>
-      </div>
-      <div class="row">
-        <div class="input-field col s12 div-label">Password: {{ form.password }} {{ form.hidden_tag() }}</div>
-      </div>
+    <div class="row">
+      <div class="input-field col s12 div-label">Username: {{ form.username }}</div>
+    </div>
+    <div class="row">
+      <div class="input-field col s12 div-label">Password: {{ form.password }} {{ form.hidden_tag() }}</div>
+    </div>
   <br>
   <br>
     <div id="btn-box">
-    <button class="btn waves-effect center grey darken-1" type="submit" value="Login" name="action">Sign in</button>
+      <button class="btn waves-effect center grey darken-1" type="submit" value="Login" name="action">Sign in</button>
     </div>
   </form>
 </div>

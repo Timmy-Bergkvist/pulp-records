@@ -10,17 +10,18 @@
     </div>
     <br>
     <div id="btn-box">
-        <br><br>
+    <br><br>
         <a class="btn waves-effect waves-light red darken-1" href="{{url_for('delete_profile', user_id=user._id)}}">Delete account<i class="material-icons right">delete_forever</i></a>
         <br><br>
         <p class="p-header">Your Records</p>
         <br>
+        <!-- Displays the record added by current user -->
         <div class="container center records-container">
             <div class="row col s12 m4 l4">
                 {% for record in recordCollection %}
                 <div class="collection-item center col s12 m4 l4">
                     <div class="div-label center">{{record.artist_name}}</div>
-                    <img alt="img-collection" class="img-collection" src="{{ record.image_id }}">
+                        <img alt="img-collection" class="img-collection" src="{{ record.image_id }}">
                     <div class="div-label center">{{record.record_title}}</div>
                     <br>
                     <a href="{{url_for('edit_record', record_id=record._id)}}" class="waves-effect waves-light btn btn_small">Edit</a>
@@ -29,7 +30,7 @@
                 {% endfor %} 
             </div>
         </div>
-        <br><br>
+    <br><br>
     </div>
 </div>
 <br><br>

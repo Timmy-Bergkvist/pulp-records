@@ -3,33 +3,36 @@
 <br>
 <div class="container" id="info-container">
     <div class="container center">
-        
-            <div class="row">
-                <div class="title div-label">{{ record.artist_name }}</div>
-                <br>
-                <div class="div-label">{{ record.genre_name }}</div>
-            </div>
-            <div class="row">
-                <div class="div-record-info col s12 m4 l4">
-                    <div class=""><img alt="img-collection" class="img-collection" src="{{ record.image_id }}"></div>
-                    <div class="div-label"> {{ record.record_title }} </div>
-                </div>
-                <div class="div-record-description col s12 m8 l8">
-                    {{record.record_description}}
-                </div>
-            </div>
+        <div class="row">
+            <!-- Displays the artist name and genre -->
+            <div class="title div-label">{{ record.artist_name }}</div>
             <br>
-            <div class="div-tracklist col 12">
-                <p class="p-header">Tracklist</p>
-                {{record.tracklist}}
+            <div class="div-label">{{ record.genre_name }}</div>
+        </div>
+        <div class="row">
+            <!-- Displays the record image and title -->
+            <div class="div-record-info col s12 m4 l4">
+                <div class=""><img alt="img-collection" class="img-collection" src="{{ record.image_id }}"></div>
+                <div class="div-label"> {{ record.record_title }} </div>
             </div>
-            <div class="row center">
-                {% if current_user.username == record.added_by %}
-                <a href="{{url_for('edit_record', record_id=record._id)}}" class="waves-effect waves-light btn btn_small">Edit</a>
-                <a href="{{url_for('delete_record', record_id=record._id)}}" class="waves-effect waves-light btn btn_small red">Delete</a>
-                {% endif %}    
+            <!-- Displays the record description -->
+            <div class="div-record-description col s12 m8 l8">
+                {{record.record_description}}
             </div>
-        
+        </div>
+        <br>
+        <!-- Displays the tracklist -->
+        <div class="div-tracklist col 12">
+            <p class="p-header">Tracklist</p>
+            {{record.tracklist}}
+        </div>
+        <!-- Edit and delete buttons only visible for the current user who added the records -->
+        <div class="row center">
+            {% if current_user.username == record.added_by %}
+            <a href="{{url_for('edit_record', record_id=record._id)}}" class="waves-effect waves-light btn btn_small">Edit</a>
+            <a href="{{url_for('delete_record', record_id=record._id)}}" class="waves-effect waves-light btn btn_small red">Delete</a>
+            {% endif %}    
+        </div>
     </div>
 </div>
 <br>

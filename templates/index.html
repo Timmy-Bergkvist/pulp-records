@@ -30,13 +30,12 @@
     <br>
     <div class="section">
       <div class="row">
-        <!--Displays the fourth latest added records-->
+        <!-- Displays the fourth latest added records -->
         {% for record in records %}
         <div class="col s12 m3">
           <div class="icon-block center">
             <p class="record-images-name center">{{ record.artist_name }}</p>
             <div class="record-images center">
-              
               <a href="{{url_for('view_record', record_id=record._id)}}"><img alt="test" class="img-collection" src="{{ record.image_id }}"></a>
             </div>
           </div>
@@ -47,10 +46,10 @@
   </div>
 </div>
 
+<!-- Parallax Section -->
 <div class="parallax-container valign-wrapper" id="parallax-container">
   <div class="section no-pad-bot">
     <div class="container">
-     
     </div>
   </div>
 </div>

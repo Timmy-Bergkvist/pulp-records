@@ -1,4 +1,5 @@
 
+// Function for sidenav
 document.addEventListener('DOMContentLoaded', function() {
   const options = {edge: "left"}
   const elems = document.querySelectorAll('.sidenav');

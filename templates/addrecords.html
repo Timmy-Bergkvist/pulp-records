@@ -5,6 +5,7 @@
     <h4 class="center h4header">Add Record</h4>
     <div class="row">
         <form action="{{url_for('insert_records')}}" method="POST" class="col s12">
+            <!-- Getting info from database and displays genre -->
             <div class="row">
                 <div id="recordfix" class="row">
                     <div class="input-field col s12">
@@ -18,30 +19,35 @@
                     </div>
                 </div>
             </div>
+            <!-- Form input for artist name -->
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">record_voice_over</i>
                     <input id="artist_name" name="artist_name" type="text" placeholder="Artist" required>
                 </div>
             </div>
+            <!-- Form input for record title -->
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">title</i>
                     <input id="record_title" name="record_title" type="text" placeholder=" Record Title" required>
                 </div>
             </div>
+            <!-- Form input for image -->
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">image</i>
                     <input id="image_id" name="image_id" type="text" placeholder="Record Image">
                 </div>
             </div>
+            <!-- Form input for tracklist -->
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">featured_play_list</i>
                     <textarea  name="tracklist" id="tracklist" class="materialize-textarea" data-length="1000" placeholder="Tracklist" required></textarea>
                 </div>
             </div>
+            <!-- Form input for record description -->
             <div class="row">
                 <div class="input-field col s12">
                     <i class="material-icons prefix">subject</i>
