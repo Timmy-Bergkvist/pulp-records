@@ -230,6 +230,11 @@ I have used Mongodb database for this project
   
 ## Deployment
   
+  
+ The hosting platform for this project is Heroku and can be run directly here: 
+ https://pulp-records.herokuapp.com/ 
+  
+  
 To run this project you need the following tools installed:
 
   - <a href="https://www.python.org/downloads/" target="_blank"> Python3 </a>
