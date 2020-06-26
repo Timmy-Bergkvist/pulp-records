@@ -26,6 +26,7 @@
             <p class="p-header">Tracklist</p>
             {{record.tracklist}}
         </div>
+        <br>
         <!-- Edit and delete buttons only visible for the current user who added the records -->
         <div class="row center">
             {% if current_user.username == record.added_by %}

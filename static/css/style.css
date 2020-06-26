@@ -209,11 +209,18 @@ span, .error {
 .record-images img{
   max-width: 60%;
 }
+
 .record-images-name {
   font-family: 'Alfa Slab One', sans-serif;
   color: #E9D603 !important;
   text-shadow: black 2px 2px;
   font-size:1.2vw;
+}
+
+@media only screen and (max-width : 604px) {
+  .record-images-name{
+    font-size:4.2vw;
+  }
 }
 
 .icon-block p{
