@@ -21,7 +21,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 from email_validator import validate_email, EmailNotValidError
 from flask_paginate import Pagination, get_page_args, get_page_parameter
-from flask_toastr import Toastr
+from utility.flask_toastr import Toastr
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 
