@@ -257,7 +257,7 @@ current user to delete a record.
 def delete_record(record_id):
     mongo.db.recordCollection.remove({'_id': ObjectId(record_id)})
     flash('Record have been deleted!', 'success')
-    return redirect(url_for('index'))
+    return redirect(url_for('records'))
 
 
 # INSERT RECORD
@@ -340,15 +340,6 @@ Function that displays all records.
 
 @app.route('/records')
 def records():
-    '''
-    total = mongo.db.recordCollection.find()
-    page = request.args.get('get_page_parameter', 1, type=int)
-    pagination = collection.query.Pagination(page=page, total=total, per_page=10)
-
-    total = mongo.db.recordCollection.find()
-    page = request.args.get('get_page_parameter', 1, type=int)
-    '''
-
     return render_template('records.html', recordCollection=mongo.db.recordCollection.find())
 
 
@@ -369,4 +360,4 @@ def view_record(record_id):
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
             port=(os.environ.get('PORT')),
-            debug=True)
+            debug=False)
