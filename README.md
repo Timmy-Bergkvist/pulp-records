@@ -2,6 +2,8 @@
 # pulp-records
 A record collection and recommendation site.
 
+This project was part of a course from <a href="https://codeinstitute.net/" target="_blank"> Code Institute. </a>
+
 ![Image of responsive](https://timmy-bergkvist.github.io/pulp-records/static/images/responsivedesign.jpg)
 
 **Target Audience**
